@@ -2,6 +2,8 @@ package com.ll.planify.global.initData;
 
 import com.ll.planify.domain.member.member.dto.MemberRegisterDto;
 import com.ll.planify.domain.member.member.service.MemberService;
+import com.ll.planify.domain.todo.todo.dto.TodoDto;
+import com.ll.planify.domain.todo.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
@@ -11,12 +13,15 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDate;
+
 @Profile("!prod")
 @Configuration
 @Slf4j
 @RequiredArgsConstructor
 public class NotProd {
     private final MemberService memberService;
+    private final TodoService todoService;
     private final PasswordEncoder passwordEncoder;
 
     @Bean
@@ -30,6 +35,31 @@ public class NotProd {
                 memberService.register(adminDto);
                 memberService.register(user1Dto);
                 memberService.register(user2Dto);
+
+                TodoDto.Request sampleTodo = TodoDto.Request.builder()
+                        .content("작업 추가!️")
+                        .isCompleted(false)
+                        .priority(1)
+                        .deadline(LocalDate.now().plusDays(3))
+                        .build();
+
+                TodoDto.Request sampleTodo2 = TodoDto.Request.builder()
+                        .content("병원 예약하기")
+                        .isCompleted(false)
+                        .priority(2)
+                        .deadline(LocalDate.now().plusDays(5))
+                        .build();
+
+                TodoDto.Request sampleTodo3 = TodoDto.Request.builder()
+                        .content("여행 계획 짜기...")
+                        .isCompleted(false)
+                        .priority(1)
+                        .deadline(LocalDate.now().plusDays(7))
+                        .build();
+
+                todoService.addTodo(sampleTodo);
+                todoService.addTodo(sampleTodo2);
+                todoService.addTodo(sampleTodo3);
             }
         };
     }

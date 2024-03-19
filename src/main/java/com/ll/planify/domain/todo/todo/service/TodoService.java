@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,7 +16,7 @@ public class TodoService {
 
     private final TodoRepository todoRepository;
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<TodoDto.Response> findAllTodos() {
         List<Todo> todos = todoRepository.findAll();
 
@@ -32,5 +31,18 @@ public class TodoService {
                 .build()).collect(Collectors.toList());
 
         return responseDtoList;
+    }
+
+    @Transactional
+    public Long addTodo(TodoDto.Request request) {
+        Todo todo = Todo.builder()
+                .content(request.getContent())
+                .isCompleted(request.isCompleted())
+                .priority(request.getPriority())
+                .deadline(request.getDeadline())
+                .build();
+        todoRepository.save(todo);
+
+        return todo.getId();
     }
 }
