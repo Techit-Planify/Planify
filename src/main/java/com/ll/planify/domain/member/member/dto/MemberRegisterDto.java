@@ -22,9 +22,10 @@ public class MemberRegisterDto {
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,16}$", message = "비밀번호는 영문과 숫자를 포함해야 합니다.")
     private String password;
 
+    @NotBlank(message = "비밀번호 확인은 필수 입력값입니다.")
+    private String passwordConfirm;
+
     @NotBlank(message = "닉네임은 필수 입력값입니다.")
     private String nickname;
-
-    private String imageUrl;
 }
 
