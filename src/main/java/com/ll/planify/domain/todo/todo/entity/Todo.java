@@ -13,6 +13,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
+@Table(name = "todo")
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PROTECTED)
 @Builder
@@ -21,6 +22,7 @@ import static lombok.AccessLevel.PROTECTED;
 public class Todo extends BaseEntity {
 
     @Id
+    @Column(name = "todo_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

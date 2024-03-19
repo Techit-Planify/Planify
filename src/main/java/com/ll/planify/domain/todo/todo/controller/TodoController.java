@@ -1,34 +1,29 @@
 package com.ll.planify.domain.todo.todo.controller;
 
+import com.ll.planify.domain.todo.todo.dto.TodoDto;
 import com.ll.planify.domain.todo.todo.entity.Todo;
-import com.ll.planify.domain.todo.todo.repository.TodoRepository;
+import com.ll.planify.domain.todo.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
+@Slf4j
 @RequiredArgsConstructor
 public class TodoController {
-    private final TodoRepository todoRepository;
+
+    private final TodoService todoService;
 
     @GetMapping("/")
-    public String main(Model model) {
-        List<Todo> todos = todoRepository.findAll();
+    public String findAllTodos(Model model) {
+        List<TodoDto.Response> todos = todoService.findAllTodos();
+        log.info("todos count = {}", todos.size());
         model.addAttribute("todos", todos);
         return "todos";
-    }
-
-    @PostMapping("/addTodo")
-    public String addTodo(@RequestParam("todo") String content) {
-        Todo newTodo = Todo.builder()
-                .content(content)
-                .build();
-        todoRepository.save(newTodo);
-        return "redirect:/";
     }
 }
