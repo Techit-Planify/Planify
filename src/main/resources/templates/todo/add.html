@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/bootstrap.css">
+</head>
+<body>
+<div class="container position-absolute top-50 start-50 translate-middle">
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <form method="post" th:action="@{/todos}" th:object="${TodoDto}">
+            <fieldset>
+                <legend class="text-center">일정 추가</legend>
+                <div>
+                    <br>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label" th:for="*{content}">제목</label>
+                        <input type="text" class="w-100 form-control" placeholder="할 일을 작성하세요!"
+                               th:field="*{content}"><br>
+                        <div th:errors="*{content}"></div>
+                    </div>
+                    <div class="col">
+                        <label class="form-label" th:for="*{deadline}">마감일</label>
+                        <input type="date" class="w-100 form-control" th:field="*{deadline}">
+                        <div th:errors="*{deadline}"></div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-auto me-auto"></div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">등록</button>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/todo}'|">취소
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -2,7 +2,7 @@ package com.ll.planify.global.initData;
 
 import com.ll.planify.domain.member.member.dto.MemberRegisterDto;
 import com.ll.planify.domain.member.member.service.MemberService;
-import com.ll.planify.domain.todo.todo.dto.TodoDto;
+import com.ll.planify.domain.todo.todo.entity.Todo;
 import com.ll.planify.domain.todo.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,30 +36,13 @@ public class NotProd {
                 memberService.register(user1Dto);
                 memberService.register(user2Dto);
 
-                TodoDto.Request sampleTodo = TodoDto.Request.builder()
-                        .content("작업 추가!️")
-                        .isCompleted(false)
-                        .priority(1)
-                        .deadline(LocalDate.now().plusDays(3))
-                        .build();
+                Todo todo1 = Todo.addTodo("장보기", LocalDate.now().plusDays(3));
+                Todo todo2 = Todo.addTodo("병원 예약", LocalDate.now().plusDays(5));
+                Todo todo3 = Todo.addTodo("여행 계획", LocalDate.now().plusDays(10));
 
-                TodoDto.Request sampleTodo2 = TodoDto.Request.builder()
-                        .content("병원 예약하기")
-                        .isCompleted(false)
-                        .priority(2)
-                        .deadline(LocalDate.now().plusDays(5))
-                        .build();
-
-                TodoDto.Request sampleTodo3 = TodoDto.Request.builder()
-                        .content("여행 계획 짜기...")
-                        .isCompleted(false)
-                        .priority(1)
-                        .deadline(LocalDate.now().plusDays(7))
-                        .build();
-
-                todoService.addTodo(sampleTodo);
-                todoService.addTodo(sampleTodo2);
-                todoService.addTodo(sampleTodo3);
+                todoService.save(todo1);
+                todoService.save(todo2);
+                todoService.save(todo3);
             }
         };
     }

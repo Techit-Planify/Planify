@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>Planify</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/bootstrap.css">
+</head>
+<body>
+<div class="px-5 gap-2 col mx-auto">
+
+    <!-- Header -->
+    <header>
+        <h1>Planify</h1>
+        <p>간편하게 할 일을 관리해보세요!</p>
+    </header>
+
+    <!-- 할 일 목록 -->
+    <div class="d-grid gap-2 mx-auto">
+        <button type="button" class="btn btn-primary btn-lg"
+                th:onclick="|location.href='@{/todo/add}'|">등록
+        </button>
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                            aria-controls="panelsStayOpen-collapseOne">
+                        할 일
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                     aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>제목</th>
+                                <th>생성일</th>
+                                <th>마감일</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr th:each="todo : ${todoDtos}">
+                                <td th:text="${todoStat.count}"></td>
+                                <td>
+                                    <input type="text" readonly name="content" class="form-control-plaintext"
+                                           th:value="${todo.content}">
+                                </td>
+                                <td>
+                                    <input type="date" readonly name="createdAt"
+                                           class="form-control-plaintext"
+                                           th:value="${#temporals.format(todo.getCreatedAt(), 'yyyy-MM-dd')}">
+                                </td>
+                                <td>
+                                    <input type="date" readonly name="dueDate" class="form-control-plaintext"
+                                           th:value="${todo.deadline}">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 완료된 리스트 -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true"
+                            aria-controls="panelsStayOpen-collapseTwo">
+                        완료됨
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show"
+                     aria-labelledby="panelsStayOpen-headingTwo">
+                    <div class="accordion-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>제목</th>
+                                <th>생성일</th>
+                                <th>마감일</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr th:each="todo : ${completedDtos}">
+                                <td th:text="${todoStat.count}"></td>
+                                <td>
+                                    <input type="text" readonly name="title" class="form-control-plaintext"
+                                           th:value="${todo.content}">
+                                </td>
+                                <td>
+                                    <input type="date" readonly name="createdDateTime"
+                                           class="form-control-plaintext"
+                                           th:value="${#temporals.format(todo.createdAt, 'yyyy-MM-dd-HH:mm:ss')}">
+                                <td>
+                                    <input type="date" readonly name="dueDate" class="form-control-plaintext"
+                                           th:value="${todo.deadline}">
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-light"
+                                            th:onclick="|location.href='@{/todo/update/{id}(id=${todo.id})}'|">수정
+                                    </button>
+                                </td>
+                                <form th:action th:method="patch">
+                                    <td>
+                                        <button type="submit" class="btn btn-light"
+                                                th:formaction="@{/todos/{id} (id=${todo.id})}">완료
+                                        </button>
+                                    </td>
+                                </form>
+                                <form th:action th:method="delete">
+                                    <td>
+                                        <button type="submit" class="btn btn-light"
+                                                th:formaction="@{/todos/{id} (id=${todo.id})}">삭제
+                                        </button>
+                                    </td>
+                                </form>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="/bootstrap.js"></script>
+</body>
+</html>

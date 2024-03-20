@@ -1,10 +1,9 @@
 package com.ll.planify.domain.todo.todo.controller;
 
 import com.ll.planify.domain.todo.todo.dto.TodoDto;
+import com.ll.planify.domain.todo.todo.entity.Todo;
 import com.ll.planify.domain.todo.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,29 +11,42 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
-@Slf4j
 @RequiredArgsConstructor
 public class TodoController {
 
     private final TodoService todoService;
 
-    @GetMapping("/")
-    public String findAllTodos(Model model) {
-        List<TodoDto.Response> todos = todoService.findAllTodos();
-        log.info("todos count = {}", todos.size());
-        model.addAttribute("todos", todos);
-        return "todos";
+    private List<TodoDto> getTodoDtos(Boolean isCompleted) {
+        List<Todo> list = todoService.findByIsCompleted(isCompleted);
+        return list.stream().map(todo ->
+                        new TodoDto(todo.getId(), todo.getContent(), todo.getIsCompleted(),
+                                todo.getCreatedAt(), todo.getUpdatedAt(), todo.getDeadline()))
+                .collect(Collectors.toList());
     }
 
-    @PostMapping("/addTodo")
-    @PreAuthorize("isAuthenticated()")
-    public String addTodo(@ModelAttribute TodoDto.Request request) {
-        // TodoDto.Request 객체를 통해 할 일을 추가하고 추가된 할 일의 ID를 받아옴
-        Long todoId = todoService.addTodo(request);
-        log.info("Added todo with ID = {}", todoId);
+    @GetMapping("/todo")
+    public String todo(Model model) {
+        model.addAttribute("todoDtos", getTodoDtos(false));
+        model.addAttribute("completedDtos", getTodoDtos(true));
+        return "todo/main";
+    }
 
-        return "redirect:/";
+    @GetMapping("/todo/add")
+    public String addForm(@ModelAttribute("TodoDto") TodoDto todoDto) {
+        return "todo/add";
+    }
+
+    @PostMapping("/todos")
+    public String addTodo(@ModelAttribute("TodoDto") TodoDto todoDto) {
+        Optional<Todo> addTodo = Optional.of(Todo.addTodo(
+                todoDto.getContent(), todoDto.getDeadline()
+        ));
+        addTodo.ifPresent(todo -> todoService.save(todo));
+
+        return "redirect:/todo";
     }
 }
