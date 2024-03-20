@@ -7,22 +7,22 @@
 <body>
 <div class="container position-absolute top-50 start-50 translate-middle">
     <div class="d-grid gap-2 col-6 mx-auto">
-        <form method="post" th:action="@{/todos}" th:object="${todoDto}">
+        <form method="post" th:action="@{/todo}" th:object="${todoDto}">
             <fieldset>
-                <legend class="text-center">일정 추가</legend>
+                <legend class="text-center">수정</legend>
                 <div>
                     <br>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label class="form-label" th:for="*{content}">제목</label>
-                        <input type="text" class="w-100 form-control" placeholder="할 일을 작성하세요!"
+                        <label class="form-label" th:for="*{content}">할 일</label>
+                        <input type="text" class="w-100 form-control"
                                th:field="*{content}"><br>
                         <div th:errors="*{content}"></div>
                     </div>
                     <div class="col">
                         <label class="form-label" th:for="*{deadline}">마감일</label>
-                        <input type="date" class="w-100 form-control" th:field="*{deadline}">
+                        <input type="date" class="w-100 form-control" name="deadline" th:value="*{deadline}">
                         <div th:errors="*{deadline}"></div>
                     </div>
                 </div>
@@ -30,7 +30,9 @@
                 <div class="row">
                     <div class="col-auto me-auto"></div>
                     <div class="col-auto">
-                        <button type="submit" class="btn btn-primary">등록</button>
+                        <button type="submit" class="btn btn-primary"
+                                th:formaction="@{/todos/{id} (id=${todoDto.id})}">수정
+                        </button>
                     </div>
                     <div class="col-auto">
                         <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/todo}'|">취소

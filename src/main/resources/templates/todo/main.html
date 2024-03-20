@@ -60,6 +60,25 @@
                                     <input type="date" readonly name="dueDate" class="form-control-plaintext"
                                            th:value="${todo.deadline}">
                                 </td>
+                                <td>
+                                    <button type="button" class="btn btn-light"
+                                            th:onclick="|location.href='@{/todo/update/{id}(id=${todo.id})}'|">수정
+                                    </button>
+                                </td>
+                                <form th:action th:method="patch">
+                                    <td>
+                                        <button type="submit" class="btn btn-light"
+                                                th:formaction="@{/todos/{id} (id=${todo.id})}">✅ 완료
+                                        </button>
+                                    </td>
+                                </form>
+                                <form th:action th:method="delete">
+                                    <td>
+                                        <button type="submit" class="btn btn-light"
+                                                th:formaction="@{/todos/{id} (id=${todo.id})}">삭제
+                                        </button>
+                                    </td>
+                                </form>
                             </tr>
                             </tbody>
                         </table>

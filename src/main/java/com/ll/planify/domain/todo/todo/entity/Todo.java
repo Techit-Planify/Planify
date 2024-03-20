@@ -40,4 +40,9 @@ public class Todo extends BaseEntity {
     public void changeStatus() {
         this.isCompleted = !this.isCompleted;
     }
+
+    public void update(String content, LocalDate deadline) {
+        this.content = content;
+        this.deadline = deadline;
+    }
 }

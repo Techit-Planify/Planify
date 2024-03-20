@@ -1,23 +1,19 @@
 package com.ll.planify.domain.todo.todo.service;
 
 import com.ll.planify.domain.todo.todo.entity.Todo;
-import com.ll.planify.domain.todo.todo.repository.TodoRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
-@Service
-@RequiredArgsConstructor
-public class TodoService {
+public interface TodoService {
+    Long save(Todo todo);
 
-    private final TodoRepository todoRepository;
+    Optional<Todo> findById(Long id);
 
-    public List<Todo> findByIsCompleted(Boolean isCompleted) {
-        return todoRepository.findByIsCompleted(isCompleted);
-    }
+    void update(Long id, String content, LocalDate deadline);
 
-    public Todo save(Todo todo) {
-        return todoRepository.save(todo);
-    }
+    void changeStatus(Long id);
+
+    List<Todo> findByIsCompleted(Boolean isCompleted);
 }
