@@ -1,5 +1,6 @@
 package com.ll.planify.domain.todo.todo.entity;
 
+import com.ll.planify.domain.member.member.entity.Member;
 import com.ll.planify.global.jpa.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -31,4 +32,8 @@ public class Todo extends BaseEntity {
 
     @ManyToMany(mappedBy = "todos", cascade = CascadeType.ALL) // ?
     private List<Category> categories = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 }
