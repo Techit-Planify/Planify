@@ -24,9 +24,9 @@ public class NotProd {
     public ApplicationRunner initNotProd() {
         return args -> {
             if (memberService.findByUsername("admin").isEmpty()) {
-                MemberRegisterDto adminDto = new MemberRegisterDto("admin", "admin", passwordEncoder.encode("admin"), passwordEncoder.encode("admin"), "admin");
-                MemberRegisterDto user1Dto = new MemberRegisterDto("user1@example.com", "user1", passwordEncoder.encode("1234"), passwordEncoder.encode("1234"), "user1");
-                MemberRegisterDto user2Dto = new MemberRegisterDto("user2@example.com", "user2", passwordEncoder.encode("1234"), passwordEncoder.encode("1234"),  "user2");
+                MemberRegisterDto adminDto = new MemberRegisterDto("admin", "admin", "admin", "admin", "admin");
+                MemberRegisterDto user1Dto = new MemberRegisterDto("user1@example.com", "user1", "1234", "1234", "user1");
+                MemberRegisterDto user2Dto = new MemberRegisterDto("user2@example.com", "user2", "1234", "1234", "user2");
                 memberService.register(adminDto);
                 memberService.register(user1Dto);
                 memberService.register(user2Dto);
