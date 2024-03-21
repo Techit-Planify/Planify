@@ -1,20 +1,9 @@
 spring:
   datasource:
     url: jdbc:h2:mem:db_test;MODE=MYSQL
-<<<<<<< HEAD
-  jpa:
-    hibernate:
-      ddl-auto: create
-custom:
-  temp:
-    dirPath: ./temp/planify_test/temp
-  genFile:
-    dirPath: ./temp/planify_test
-=======
     username: sa
     password:
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
       ddl-auto: create
->>>>>>> 48efb830095015bc6edb1eeed80c4ab9565f2736

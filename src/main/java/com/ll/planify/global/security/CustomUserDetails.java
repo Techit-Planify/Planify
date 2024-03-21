@@ -10,10 +10,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 48efb830095015bc6edb1eeed80c4ab9565f2736
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
     private final Member member;
@@ -48,13 +44,6 @@ public class CustomUserDetails implements UserDetails {
         return member.getNickname();
     }
 
-<<<<<<< HEAD
-    public String getImageUrl(){
-        return member.getImageUrl();
-    }
-
-=======
->>>>>>> 48efb830095015bc6edb1eeed80c4ab9565f2736
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -75,7 +64,3 @@ public class CustomUserDetails implements UserDetails {
         return true;
     }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 48efb830095015bc6edb1eeed80c4ab9565f2736

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <title>Planify</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+<div class="container">
+
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+
+    <div class="jumbotron">
+        <h1>Planify</h1>
+        <p class="lead">간편하게 할 일을 관리하세요 !</p>
+        <p>
+            <a class="btn btn-lg btn-primary" href="todo/add">새로운 할 일 등록</a>
+        </p>
+        <p>
+            <a class="btn btn-lg btn-secondary" href="todo/list">ALL</a>
+            <a class="btn btn-lg btn-success" href="new">우선 순위</a>
+        </p>
+        <p>
+            <a class="btn btn-lg btn-info" href="new">마감일 임박</a>
+            <a class="btn btn-lg btn-dark" href="new">완료됨</a>
+        </p>
+    </div>
+</div>

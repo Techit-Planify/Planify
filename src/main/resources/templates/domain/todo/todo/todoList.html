@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>할 일</th>
+                <th>마감일</th>
+                <th>우선순위</th>
+                <th>진행여부</th>
+                <th>생성일</th>
+                <th>수정일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="todo : ${todos}">
+                <td th:text="${todo.id}"></td>
+                <td th:text="${todo.content}"></td>
+                <td th:text="${todo.deadline}"></td>
+                <td th:text="${todo.priority}"></td>
+                <td th:text="${todo.status}"></td>
+                <td th:text="${todo.status}"></td>
+                <td th:text="${todo.status}"></td>
+                <td>
+                    <a href="#" th:href="@{/todo/{id}/update (id=${todo.id})}" class="btn btn-primary" role="button">수정</a>
+                </td>
+                <td>
+                    <a href="#" th:href="@{/todo/{id}/delete (id=${todo.id})}" class="btn btn-secondary" role="button">삭제</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
