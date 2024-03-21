@@ -23,10 +23,10 @@ public class NotProd {
     @Order(2)
     public ApplicationRunner initNotProd() {
         return args -> {
-            if (!memberService.findByUsername("admin").isPresent()) {
-                MemberRegisterDto adminDto = new MemberRegisterDto("admin", "admin", passwordEncoder.encode("admin"), "admin", null);
-                MemberRegisterDto user1Dto = new MemberRegisterDto("user1@example.com", "user1", passwordEncoder.encode("1234"), "user1", null);
-                MemberRegisterDto user2Dto = new MemberRegisterDto("user2@example.com", "user2", passwordEncoder.encode("1234"), "user2", null);
+            if (memberService.findByUsername("admin").isEmpty()) {
+                MemberRegisterDto adminDto = new MemberRegisterDto("admin", "admin", "admin", "admin", "admin");
+                MemberRegisterDto user1Dto = new MemberRegisterDto("user1@example.com", "user1", "1234", "1234", "user1");
+                MemberRegisterDto user2Dto = new MemberRegisterDto("user2@example.com", "user2", "1234", "1234", "user2");
                 memberService.register(adminDto);
                 memberService.register(user1Dto);
                 memberService.register(user2Dto);

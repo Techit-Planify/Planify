@@ -6,9 +6,13 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
+@Setter
 public class MemberRegisterDto {
     @NotBlank(message = "이메일은 필수 입력값입니다.")
     @Email(message = "올바른 이메일 형식을 입력해주세요.")
@@ -22,9 +26,10 @@ public class MemberRegisterDto {
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,16}$", message = "비밀번호는 영문과 숫자를 포함해야 합니다.")
     private String password;
 
+    @NotBlank(message = "비밀번호 확인은 필수 입력값입니다.")
+    private String passwordConfirm;
+
     @NotBlank(message = "닉네임은 필수 입력값입니다.")
     private String nickname;
-
-    private String imageUrl;
 }
 

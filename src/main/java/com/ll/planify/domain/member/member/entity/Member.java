@@ -33,6 +33,4 @@ public class Member extends BaseEntity {
     @Column(unique = true)
     private String nickname;
 
-    private String imageUrl;
-
 }

@@ -44,10 +44,6 @@ public class CustomUserDetails implements UserDetails {
         return member.getNickname();
     }
 
-    public String getImageUrl(){
-        return member.getImageUrl();
-    }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;

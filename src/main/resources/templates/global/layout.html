@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Planify</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+
+    <style>
+        .dm-mono-medium {
+            font-family: "DM Mono", monospace;
+            font-weight: 500;
+            font-style: normal;
+            padding: 10px 20px; /* 버튼 내부의 패딩을 조정하여 크기를 늘립니다 */
+            font-size: 18px; /* 글씨 크기를 늘려서 버튼의 전체적인 크기가 커지게 합니다 */
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <!-- 상단 로고 버튼 -->
+    <header class="row">
+        <div class="col text-center p-3">
+            <button onclick="location.href='/'" class="btn btn-light dm-mono-medium">Planify</button>
+        </div>
+    </header>
+
+    <!-- 콘텐츠가 들어갈 메인 부분 -->
+    <main class="row">
+        <div class="col" layout:fragment="content">
+            <!-- 다른 페이지의 콘텐츠가 여기에 들어갑니다 -->
+        </div>
+    </main>
+
+    <!-- 푸터 부분이 여기 있었습니다. -->
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
