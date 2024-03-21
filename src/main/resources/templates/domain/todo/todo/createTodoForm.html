@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+    <form role="form" action="/todo/add" th:object="${todoForm}" method="post">
+        <div class="form-group">
+            <label th:for="content">할 일</label>
+            <input type="text" th:field="*{content}" class="form-control" placeholder="새로운 할 일"
+                   th:class="${#fields.hasErrors('content')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Incorrect date</p>
+        </div>
+
+        <div class="form-group">
+            <label th:for="deadline">마감일</label>
+            <input type="date" th:field="*{deadline}" class="form-control" placeholder="마감일을 선택하세요">
+        </div>
+
+        <div class="form-group">
+            <label th:for="priority">우선순위</label>
+            <select th:field="*{priority}" class="form-control">
+                <option th:each="priority : ${T(com.ll.planify.domain.todo.todo.entity.TodoPriority).values()}"
+                        th:value="${priority}" th:text="${priority}" />
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">등록</button>
+    </form>
+    <br/>
+</div>
+</body>
+</html>
