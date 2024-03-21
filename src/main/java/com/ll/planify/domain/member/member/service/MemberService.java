@@ -23,6 +23,11 @@ public class MemberService {
             throw new RuntimeException("이미 등록된 이메일입니다.");
         } else if (nicknameIsExist(memberRegisterDto.getNickname())) {
             throw new RuntimeException("이미 등록된 닉네임입니다.");
+<<<<<<< HEAD
+=======
+        } else if (!memberRegisterDto.getPassword().equals(memberRegisterDto.getPasswordConfirm())){
+            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+>>>>>>> 48efb830095015bc6edb1eeed80c4ab9565f2736
         }
 
         Member member = Member.builder()
@@ -30,7 +35,10 @@ public class MemberService {
                 .username(memberRegisterDto.getUsername())
                 .password(passwordEncoder.encode(memberRegisterDto.getPassword()))
                 .nickname(memberRegisterDto.getNickname())
+<<<<<<< HEAD
                 .imageUrl(memberRegisterDto.getImageUrl())
+=======
+>>>>>>> 48efb830095015bc6edb1eeed80c4ab9565f2736
                 .build();
 
         memberRepository.save(member);
@@ -48,5 +56,12 @@ public class MemberService {
         return memberRepository.findByUsername(username);
     }
 
+<<<<<<< HEAD
+=======
+    public boolean confirmPassword(String password, String confirmPassword){
+        return password.equals(confirmPassword);
+    }
+
+>>>>>>> 48efb830095015bc6edb1eeed80c4ab9565f2736
 
 }

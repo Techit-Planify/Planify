@@ -1,4 +1,9 @@
 spring:
+<<<<<<< HEAD
   output:
     ansi:
       enabled: always
+=======
+  thymeleaf:
+    cache: false
+>>>>>>> 48efb830095015bc6edb1eeed80c4ab9565f2736

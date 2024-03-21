@@ -1,5 +1,6 @@
 package com.ll.planify;
 
+<<<<<<< HEAD
 import com.ll.planify.domain.todo.todo.entity.Todo;
 import com.ll.planify.domain.todo.todo.repository.TodoRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -38,4 +39,16 @@ class PlanifyApplicationTests {
         assertEquals("Study for exam", savedTodo.getContent());
         assertEquals(1, savedTodo.getPriority());
     }
+=======
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class PlanifyApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+>>>>>>> 48efb830095015bc6edb1eeed80c4ab9565f2736
 }
