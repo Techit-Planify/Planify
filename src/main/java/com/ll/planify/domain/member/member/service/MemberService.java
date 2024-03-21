@@ -23,7 +23,7 @@ public class MemberService {
             throw new RuntimeException("이미 등록된 이메일입니다.");
         } else if (nicknameIsExist(memberRegisterDto.getNickname())) {
             throw new RuntimeException("이미 등록된 닉네임입니다.");
-        } else if (memberRegisterDto.getPassword().equals(memberRegisterDto.getPasswordConfirm())){
+        } else if (!memberRegisterDto.getPassword().equals(memberRegisterDto.getPasswordConfirm())){
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }
 
@@ -47,6 +47,10 @@ public class MemberService {
 
     public Optional<Member> findByUsername(String username) {
         return memberRepository.findByUsername(username);
+    }
+
+    public boolean confirmPassword(String password, String confirmPassword){
+        return password.equals(confirmPassword);
     }
 
 
