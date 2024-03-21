@@ -20,7 +20,7 @@
         <div class="form-group">
             <label th:for="priority">우선순위</label>
             <select th:field="*{priority}" class="form-control">
-                <option th:each="priority : ${T(com.td.todolist240317.domain.todo.todo.entity.TodoPriority).values()}"
+                <option th:each="priority : ${T(com.ll.planify.domain.todo.todo.entity.TodoPriority).values()}"
                         th:value="${priority}" th:text="${priority}" />
             </select>
         </div>

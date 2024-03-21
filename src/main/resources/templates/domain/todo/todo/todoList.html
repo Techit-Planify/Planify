@@ -25,8 +25,8 @@
                 <td th:text="${todo.deadline}"></td>
                 <td th:text="${todo.priority}"></td>
                 <td th:text="${todo.status}"></td>
-                <td th:text="${todo.status}"></td>
-                <td th:text="${todo.status}"></td>
+                <td th:text="${#temporals.format(todo.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${#temporals.format(todo.updatedAt, 'yyyy-MM-dd HH:mm')}"></td>
                 <td>
                     <a href="#" th:href="@{/todo/{id}/update (id=${todo.id})}" class="btn btn-primary" role="button">수정</a>
                 </td>
