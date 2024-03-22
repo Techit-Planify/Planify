@@ -44,6 +44,10 @@ public class SecurityConfig {
                                         .defaultSuccessUrl("/")
 
                 )
+                .oauth2Login(
+                        oauth2Login -> oauth2Login
+                                .loginPage("/member/login")
+                )
                 .logout(
                         logout ->
                                 logout

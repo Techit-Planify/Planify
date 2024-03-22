@@ -1,14 +1,14 @@
 package com.ll.planify.domain.member.member.entity;
 
+import com.ll.planify.domain.todo.todo.entity.Todo;
 import com.ll.planify.global.jpa.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
@@ -32,5 +32,10 @@ public class Member extends BaseEntity {
 
     @Column(unique = true)
     private String nickname;
+
+    private String providerId;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Todo> todoList;
 
 }

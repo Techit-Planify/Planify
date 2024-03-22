@@ -25,12 +25,10 @@ public class TodoService {
         return todo.getId();
     }
 
-    @Transactional
     public List<Todo> findTodos() {
         return todoRepository.findAll();
     }
 
-    @Transactional
     public Optional<Todo> findById(Long todoId) {
         return todoRepository.findById(todoId);
     }
