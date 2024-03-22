@@ -61,7 +61,7 @@ public class TodoController {
         return "domain/todo/todo/todoList";
     }
 
-    @PostMapping("/{todoId}/complete")
+    @GetMapping("/{todoId}/complete")
     public String completeTodo(@PathVariable Long todoId) {
         todoService.completeTodo(todoId);
         return "redirect:/todo/list";

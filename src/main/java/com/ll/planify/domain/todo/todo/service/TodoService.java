@@ -31,6 +31,7 @@ public class TodoService {
         return todoRepository.findAll();
     }
 
+    @Transactional
     public void completeTodo(Long todoId) {
         Optional<Todo> todoOptional = todoRepository.findById(todoId);
 

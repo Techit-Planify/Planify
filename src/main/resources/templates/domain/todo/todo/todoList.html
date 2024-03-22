@@ -40,9 +40,7 @@
                     <a href="#" th:href="@{/todo/{id}/delete (id=${todo.id})}" class="btn btn-secondary" role="button" style="white-space: nowrap;">삭제</a>
                 </td>
                 <td>
-                    <form th:action="@{/todo/{id}/complete (id=${todo.id})}" th:method="post">
-                        <button type="submit" class="btn btn-success" style="white-space: nowrap;">완료</button>
-                    </form>
+                    <a href="#" th:href="@{/todo/{id}/complete (id=${todo.id})}" class="btn btn-success" role="button" style="white-space: nowrap;">수정</a>
                 </td>
             </tr>
             </tbody>
