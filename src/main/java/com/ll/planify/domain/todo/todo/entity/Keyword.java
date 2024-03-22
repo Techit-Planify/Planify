@@ -17,7 +17,7 @@ public class Keyword extends BaseEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "tag_id")
+    @Column(name = "keyword_id")
     private Long id;
 
     private String content;

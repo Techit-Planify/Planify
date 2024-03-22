@@ -37,4 +37,9 @@ public class KeywordService {
     public List<Keyword> getAllKeywords() {
         return keywordRepository.findAll();
     }
+
+    @Transactional
+    public void deleteKeyword(Long keywordId) {
+        keywordRepository.deleteById(keywordId);
+    }
 }

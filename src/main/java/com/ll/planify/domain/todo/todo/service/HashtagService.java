@@ -49,6 +49,7 @@ public class HashtagService {
         });
     }
 
+    // 해시태그 수정 및 삭제
     @Transactional
     public void updateHashtags(Long todoId, String keywordContentsStr) {
         Optional<Todo> optionalTodo = todoRepository.findById(todoId);
@@ -57,6 +58,27 @@ public class HashtagService {
             hashtagRepository.removeHashtagsByTodoId(todoId);
 
             addHashtags(todo, keywordContentsStr);
+
+            List<Hashtag> hashtags = hashtagRepository.findByTodoId(todoId);
+            hashtags.forEach(hashtag -> removeUnusedHashtags(hashtag.getKeyword().getId()));
         });
+
+        // 사용되지 않는 키워드 삭제
+        List<Keyword> allKeywords = keywordService.getAllKeywords();
+        allKeywords.forEach(keyword -> {
+            List<Hashtag> hashtagsUsingKeyword = hashtagRepository.findByKeywordId(keyword.getId());
+            if (hashtagsUsingKeyword.isEmpty()) {
+                keywordService.deleteKeyword(keyword.getId());
+            }
+        });
+    }
+
+    @Transactional
+    public void removeUnusedHashtags(Long keywordId) {
+        List<Hashtag> hashtags = hashtagRepository.findByKeywordId(keywordId);
+
+        if (hashtags.isEmpty()) {
+            keywordService.deleteKeyword(keywordId);
+        }
     }
 }
