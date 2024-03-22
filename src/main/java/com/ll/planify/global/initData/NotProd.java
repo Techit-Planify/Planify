@@ -61,11 +61,21 @@ public class NotProd {
                 t3.setStatus(TodoStatus.진행중);
                 todoService.save(t3);
 
+                Todo t4 = new Todo();
+                t4.setContent("노트북 매장 방문");
+                t4.setDeadline(LocalDate.now().plusDays(30));
+                t4.setPriority(TodoPriority.중간);
+                t4.setStatus(TodoStatus.완료);
+                todoService.save(t4);
+
                 String hash1 = "#쇼핑 #식품 #외출";
                 hashtagService.addHashtags(t1, hash1);
 
                 String hash2 = "#건강 #외출";
                 hashtagService.addHashtags(t2, hash2);
+
+                String hash4 = "#쇼핑 #취미";
+                hashtagService.addHashtags(t4, hash4);
             }
         };
     }
