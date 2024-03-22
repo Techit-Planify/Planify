@@ -19,8 +19,12 @@ public class SecurityConfig {
                         authorizeRequests
                                 .requestMatchers("/h2-console/**")
                                 .permitAll()
-                                .anyRequest()
+                                .requestMatchers("/")
                                 .permitAll()
+                                .requestMatchers("/member/**")
+                                .permitAll()
+                                .anyRequest()
+                                .authenticated()
                 )
                 .headers(
                         headers ->
