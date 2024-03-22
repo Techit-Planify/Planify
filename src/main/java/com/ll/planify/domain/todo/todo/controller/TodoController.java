@@ -6,6 +6,7 @@ import com.ll.planify.domain.todo.todo.service.HashtagService;
 import com.ll.planify.domain.todo.todo.service.TodoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,10 +54,14 @@ public class TodoController {
         return "redirect:/";
     }
 
-    // 전체 목록 조회
     @GetMapping("/list")
-    public String list(Model model) {
-        List<Todo> todos = todoService.findTodos();
+    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+                       @RequestParam(value = "kw", defaultValue = "") String kw) {
+        Page<Todo> paging = this.todoService.getTodos(page, kw);
+        List<Todo> todos = paging.getContent();
+
+        model.addAttribute("paging", paging);
+        model.addAttribute("kw", kw);
         model.addAttribute("todos", todos);
         return "domain/todo/todo/todoList";
     }

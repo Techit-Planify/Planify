@@ -27,10 +27,10 @@ public class Todo extends BaseEntity {
     private LocalDate deadline; // 마감일 설정
 
     @Enumerated(EnumType.STRING)
-    private TodoPriority priority; // 우선순위 [HIGH, MEDIUM, LOW]
+    private TodoPriority priority; // 우선순위[높음, 중간, 낮음]
 
     @Enumerated(EnumType.STRING)
-    private TodoStatus status; // 완료 상태 [PROGRESS, DONE]
+    private TodoStatus status; // 진행여부[PROGRESS, DONE]
 
     @OneToMany(mappedBy = "todo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Hashtag> hashtags = new ArrayList<>();
