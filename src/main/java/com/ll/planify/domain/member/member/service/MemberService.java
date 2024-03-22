@@ -39,7 +39,7 @@ public class MemberService {
     }
 
     @Transactional
-    public Member whenSocialLogin(String providerTypeCode, String providerId, String nickname) {
+    public Member whenSocialLogin(String providerTypeCode, String providerId, String nickname, String name, String email) {
         Optional<Member> optionalMember = findByProviderId(providerId);
         if (optionalMember.isPresent()) {
             return optionalMember.get();
@@ -49,8 +49,8 @@ public class MemberService {
 
         // 중복 코드 제거를 위해 Member 객체 생성 로직을 단일화
         Member member = Member.builder()
-                .email(providerTypeCode)
-                .username(providerTypeCode + "__%s".formatted(nickname)) // formatted 메소드 대신 "+" 연산자 사용
+                .email(email)
+                .username(name) // formatted 메소드 대신 "+" 연산자 사용
                 .password(null)
                 .nickname(uniqueNickname)
                 .providerId(providerId)

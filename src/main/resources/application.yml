@@ -31,6 +31,12 @@ spring:
                         client-name: Kakao
                         authorization-grant-type: authorization_code
                         redirect-uri: '${custom.site.baseUrl}/{action}/oauth2/code/{registrationId}'
+                    google:
+                        client-id: ON_SECRET
+                        client-secret: ON_SECRET
+                        scope:
+                            - email
+                            - profile
                 provider:
                     kakao:
                         authorization-uri: https://kauth.kakao.com/oauth/authorize
