@@ -24,6 +24,12 @@
                         th:value="${priority}" th:text="${priority}" />
             </select>
         </div>
+
+        <div class="form-group">
+            <label th:for="tag">태그</label>
+            <input type="text" th:field="*{tag}" class="form-control" placeholder="태그를 추가하세요">
+        </div>
+
         <button type="submit" class="btn btn-primary">수정</button>
         <a th:href="@{'/todo/list'}" class="btn btn-secondary">취소</a>
     </form>
