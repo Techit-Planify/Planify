@@ -32,10 +32,34 @@ public class MemberService {
                 .username(memberRegisterDto.getUsername())
                 .password(passwordEncoder.encode(memberRegisterDto.getPassword()))
                 .nickname(memberRegisterDto.getNickname())
+                .providerId(null)
                 .build();
 
         memberRepository.save(member);
     }
+
+    @Transactional
+    public Member whenSocialLogin(String providerTypeCode, String providerId, String nickname) {
+        Optional<Member> optionalMember = findByProviderId(providerId);
+        if (optionalMember.isPresent()) {
+            return optionalMember.get();
+        }
+
+        String uniqueNickname = nicknameIsExist(nickname) ? generateUniqueNickname(nickname) : nickname;
+
+        // 중복 코드 제거를 위해 Member 객체 생성 로직을 단일화
+        Member member = Member.builder()
+                .email(providerTypeCode)
+                .username(providerTypeCode + "__%s".formatted(nickname)) // formatted 메소드 대신 "+" 연산자 사용
+                .password(null)
+                .nickname(uniqueNickname)
+                .providerId(providerId)
+                .build();
+
+        memberRepository.save(member);
+        return member;
+    }
+
 
     public boolean emailIsExist(String email){
         return memberRepository.existsByEmail(email);
@@ -53,5 +77,19 @@ public class MemberService {
         return password.equals(confirmPassword);
     }
 
+    public Optional<Member> findByProviderId(String providerId) {
+        return memberRepository.findByProviderId(providerId);
+    }
 
+    public String generateUniqueNickname(String nickname){
+        int suffix = 1;
+        String uniqueNickname = nickname + suffix;
+
+        while (memberRepository.existsByNickname(uniqueNickname)){
+            suffix++;
+            uniqueNickname = nickname + suffix;
+        }
+
+        return uniqueNickname;
+    }
 }
