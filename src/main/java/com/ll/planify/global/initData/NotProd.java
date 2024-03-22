@@ -5,6 +5,7 @@ import com.ll.planify.domain.member.member.service.MemberService;
 import com.ll.planify.domain.todo.todo.entity.Todo;
 import com.ll.planify.domain.todo.todo.entity.TodoPriority;
 import com.ll.planify.domain.todo.todo.entity.TodoStatus;
+import com.ll.planify.domain.todo.todo.service.HashtagService;
 import com.ll.planify.domain.todo.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ public class NotProd {
     private final MemberService memberService;
     private final TodoService todoService;
     private final PasswordEncoder passwordEncoder;
+    private final HashtagService hashtagService;
 
     @Bean
     @Order(2)
@@ -58,6 +60,12 @@ public class NotProd {
                 t3.setPriority(TodoPriority.높음);
                 t3.setStatus(TodoStatus.진행중);
                 todoService.save(t3);
+
+                String hash1 = "#쇼핑 #식품 #외출";
+                hashtagService.addHashtags(t1, hash1);
+
+                String hash2 = "#건강 #외출";
+                hashtagService.addHashtags(t2, hash2);
             }
         };
     }

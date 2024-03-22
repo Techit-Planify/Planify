@@ -40,6 +40,7 @@ body {
     border-bottom: 1px solid #e5e5e5;
     margin-bottom: 20px;
 }
+
 .jumbotron .btn {
     font-size: 21px;
     width: 200px;
@@ -48,17 +49,30 @@ body {
     margin: 10px;
 }
 
-@media screen and (min-width: 768px) {
-    .header,
-    .marketing,
-    .footer {
-        padding-left: 0;
-        padding-right: 0;
-    }
-    .header {
-        margin-bottom: 30px;
-    }
-    .jumbotron {
-        border-bottom: 0;
-    }
+.fieldError {
+    border-color: #bd2130;
+}
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.tag {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 3px 8px;
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.tag-text {
+    margin-right: 5px;
+}
+
+.tag-delete {
+    cursor: pointer;
 }

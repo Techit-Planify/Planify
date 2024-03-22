@@ -2,6 +2,7 @@ package com.ll.planify.domain.todo.todo.controller;
 
 import com.ll.planify.domain.todo.todo.entity.Todo;
 import com.ll.planify.domain.todo.todo.entity.TodoStatus;
+import com.ll.planify.domain.todo.todo.service.HashtagService;
 import com.ll.planify.domain.todo.todo.service.TodoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,15 +21,16 @@ import java.util.Optional;
 public class TodoController {
 
     private final TodoService todoService;
+    private final HashtagService hashtagService;
 
-    @GetMapping("/add")
-    public String addForm(Model model) {
+    @GetMapping("/create")
+    public String createForm(Model model) {
         model.addAttribute("todoForm", new TodoForm());
         return "domain/todo/todo/createTodoForm";
     }
 
-    @PostMapping("/add")
-    public String add(@Valid TodoForm form, BindingResult result) {
+    @PostMapping("/create")
+    public String create(@Valid TodoForm form, BindingResult result) {
 
         if (result.hasErrors()) {
             return "domain/todo/todo/createTodoForm";
@@ -37,6 +39,9 @@ public class TodoController {
         // 날짜를 문자열로 변환하여 설정
         form.setDeadline(form.getDeadline().toString());
 
+        // 태그 분리
+        String hashtagStr = form.getTag();
+
         Todo todo = new Todo();
         todo.setContent(form.getContent());
         todo.setDeadline(LocalDate.parse(form.getDeadline())); // 문자열을 다시 LocalDate로 변환하여 설정
@@ -44,6 +49,7 @@ public class TodoController {
         todo.setStatus(TodoStatus.진행중);
 
         todoService.save(todo);
+        hashtagService.addHashtags(todo, hashtagStr);
         return "redirect:/";
     }
 
@@ -57,7 +63,7 @@ public class TodoController {
 
     @GetMapping("/{todoId}/update")
     public String updateTodoForm(@PathVariable("todoId") Long todoId, Model model) {
-        Optional<Todo> getTodo = todoService.findById(todoId);
+        Optional<Todo> getTodo = todoService.findByTodoId(todoId);
         TodoForm form = new TodoForm();
 
         if (getTodo.isPresent()) {
@@ -65,6 +71,7 @@ public class TodoController {
             form.setContent(todo.getContent());
             form.setDeadline(todo.getDeadline().toString()); // LocalDate를 문자열로 변환하여 설정
             form.setPriority(todo.getPriority());
+            form.setTag(todoService.getHashtagsAsString(todoId));
         }
 
         model.addAttribute("form", form);
@@ -77,6 +84,7 @@ public class TodoController {
         LocalDate deadline = LocalDate.parse(form.getDeadline());
 
         todoService.updateTodo(todoId, form.getContent(), deadline, form.getPriority());
+        hashtagService.updateHashtags(todoId, form.getTag());
         return "redirect:/todo/list";
     }
 

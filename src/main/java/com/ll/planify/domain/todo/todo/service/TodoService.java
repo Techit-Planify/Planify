@@ -1,8 +1,10 @@
 package com.ll.planify.domain.todo.todo.service;
 
+import com.ll.planify.domain.todo.todo.entity.Hashtag;
 import com.ll.planify.domain.todo.todo.entity.Todo;
 import com.ll.planify.domain.todo.todo.entity.TodoPriority;
 import com.ll.planify.domain.todo.todo.repository.TodoRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +31,7 @@ public class TodoService {
         return todoRepository.findAll();
     }
 
-    public Optional<Todo> findById(Long todoId) {
+    public Optional<Todo> findByTodoId(Long todoId) {
         return todoRepository.findById(todoId);
     }
 
@@ -51,5 +53,19 @@ public class TodoService {
     @Transactional
     public void deleteTodo(Long todoId) {
         todoRepository.deleteById(todoId);
+    }
+
+    public String getHashtagsAsString(Long todoId) {
+        Optional<Todo> todoOptional = todoRepository.findById(todoId);
+        if (todoOptional.isPresent()) {
+            Todo todo = todoOptional.get();
+            List<Hashtag> hashtags = todo.getHashtags();
+            StringBuilder stringBuilder = new StringBuilder();
+            for (Hashtag hashtag : hashtags) {
+                stringBuilder.append(hashtag.getKeyword().getContent()).append(" ");
+            }
+            return stringBuilder.toString().trim();
+        }
+        return "";
     }
 }
