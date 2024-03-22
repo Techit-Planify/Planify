@@ -33,6 +33,8 @@ public class Member extends BaseEntity {
     @Column(unique = true)
     private String nickname;
 
+    private String providerId;
+
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Todo> todoList;
 
