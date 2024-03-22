@@ -3,8 +3,8 @@ package com.ll.planify.domain.todo.todo.service;
 import com.ll.planify.domain.todo.todo.entity.Hashtag;
 import com.ll.planify.domain.todo.todo.entity.Todo;
 import com.ll.planify.domain.todo.todo.entity.TodoPriority;
+import com.ll.planify.domain.todo.todo.entity.TodoStatus;
 import com.ll.planify.domain.todo.todo.repository.TodoRepository;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +29,17 @@ public class TodoService {
 
     public List<Todo> findTodos() {
         return todoRepository.findAll();
+    }
+
+    public void completeTodo(Long todoId) {
+        Optional<Todo> todoOptional = todoRepository.findById(todoId);
+
+        todoOptional.ifPresent(todo -> {
+            if (!todo.getStatus().equals(TodoStatus.완료)) {
+                todo.setStatus(TodoStatus.완료);
+                todoRepository.save(todo);
+            }
+        });
     }
 
     public Optional<Todo> findByTodoId(Long todoId) {

@@ -61,6 +61,12 @@ public class TodoController {
         return "domain/todo/todo/todoList";
     }
 
+    @PostMapping("/{todoId}/complete")
+    public String completeTodo(@PathVariable Long todoId) {
+        todoService.completeTodo(todoId);
+        return "redirect:/todo/list";
+    }
+
     @GetMapping("/{todoId}/update")
     public String updateTodoForm(@PathVariable("todoId") Long todoId, Model model) {
         Optional<Todo> getTodo = todoService.findByTodoId(todoId);
