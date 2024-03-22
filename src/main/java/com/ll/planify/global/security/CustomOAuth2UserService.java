@@ -29,28 +29,31 @@ public class CustomOAuth2UserService  extends DefaultOAuth2UserService {
         String email = null;
         String name = null;
         String nickname = null;
+        String providerId = null;
 
         switch (providerTypeCode) {
             case "KAKAO":
-                // 카카오 API 응답 구조에 따라 nickname을 추출합니다.
                 Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
                 Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
                 name = (String) profile.get("nickname");
                 nickname = providerTypeCode + "__%s".formatted(name);
                 email = name + "@" + providerTypeCode + (int) (Math.random() * 100000);
+                providerId = providerTypeCode + "__%s".formatted(oauthId);
                 break;
             case "GOOGLE":
-                // 구글 API 응답 구조에 맞게 처리할 로직을 추가하세요.
                 email = (String) attributes.get("email");
                 name = (String) attributes.get("name");
                 nickname = providerTypeCode + "__%s".formatted(name);
-
+                providerId = providerTypeCode + "__%s".formatted(oauthId);
+                break;
+            case "NAVER":
+                Map<String, Object> response = (Map<String, Object>)attributes.get("response");
+                email = (String) response.get("email");
+                name = (String) response.get("name");
+                nickname = providerTypeCode + "__" + (String) response.get("nickname");
+                providerId = providerTypeCode + "__" + (String) response.get("id");
                 break;
         }
-
-
-        // OAuth2 ID와 프로바이더 타입을 조합하여 유니크한 사용자 이름을 생성합니다.
-        String providerId = providerTypeCode + "__%s".formatted(oauthId);
 
         // whenSocialLogin 메소드를 수정된 매개변수 목록에 맞게 호출합니다.
         Member member = memberService.whenSocialLogin(providerTypeCode ,providerId, nickname, name, email);
