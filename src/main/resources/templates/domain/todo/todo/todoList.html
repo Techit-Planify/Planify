@@ -8,7 +8,7 @@
 
     <div class="row my-3">
         <div class="col-md-5">
-            <a href="@{/todo/create}" class="btn-primary">할 일 등록</a>
+            <a th:href="@{/todo/create}" class="btn btn-primary">할 일 등록</a>
         </div>
         <div class="col-6">
             <div class="input-group">
@@ -18,48 +18,40 @@
         </div>
     </div>
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th style="white-space: nowrap; ">#</th>
-            <th style="white-space: nowrap;">할 일</th>
-            <th style="white-space: nowrap;">마감일</th>
-            <th style="white-space: nowrap;">우선순위</th>
-            <th style="white-space: nowrap;">진행여부</th>
-            <th style="white-space: nowrap;">태그</th>
-            <th style="white-space: nowrap;">생성일</th>
-            <th style="white-space: nowrap;">수정일</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="todo : ${todos}">
-            <td th:text="${todo.id}"></td>
-            <td th:text="${todo.content}"></td>
-            <td th:text="${todo.deadline}"></td>
-            <td th:text="${todo.priority}"></td>
-            <td th:text="${todo.status}"></td>
-            <td>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-light">
+            <tr>
+                <th style="white-space: nowrap; ">#</th>
+                <th style="white-space: nowrap;">할 일</th>
+                <th style="white-space: nowrap;">마감일</th>
+                <th style="white-space: nowrap;">우선순위</th>
+                <th style="white-space: nowrap;">진행여부</th>
+                <th style="white-space: nowrap;">태그</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="todo : ${todos}" th:id="'todo-' + ${todo.id}">
+                <td th:text="${todo.id}"></td>
+                <td>
+                    <a class="todo-content" th:text="${todo.content}" th:href="@{/todo/{id}/detail (id=${todo.id})}"></a>
+                </td>
+                <td th:text="${todo.deadline}"></td>
+                <td th:text="${todo.priority}"></td>
+                <td th:text="${todo.status}"></td>
+                <td>
                     <span th:each="hashtag : ${todo.hashtags}">
                         <span th:text="${hashtag.keyword.content}"></span>
                     </span>
-            </td>
-            <td th:text="${#temporals.format(todo.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="${#temporals.format(todo.updatedAt, 'yyyy-MM-dd HH:mm')}"></td>
-            <td>
-                <a href="#" th:href="@{/todo/{id}/update (id=${todo.id})}" class="btn btn-primary" role="button"
-                   style="white-space: nowrap;">수정</a>
-            </td>
-            <td>
-                <a href="#" th:href="@{/todo/{id}/delete (id=${todo.id})}" class="btn btn-secondary" role="button"
-                   style="white-space: nowrap;">삭제</a>
-            </td>
-            <td>
-                <a href="#" th:href="@{/todo/{id}/complete (id=${todo.id})}" class="btn btn-success" role="button"
-                   style="white-space: nowrap;">완료</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                </td>
+                <td>
+                    <a th:href="@{/todo/{id}/complete (id=${todo.id})}" class="btn btn-success" role="button"
+                       style="white-space: nowrap;">완료</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
     <!-- 페이징처리 시작 -->
     <div th:if="${!paging.isEmpty()}">
@@ -89,18 +81,16 @@
     </form>
 </div>
 
+<!-- 검색 스크립트 -->
 <script layout:fragment="script" type='text/javascript'>
     const page_elements = document.getElementsByClassName("page-link");
     Array.from(page_elements).forEach(function (element) {
         element.addEventListener('click', function () {
             const nextPage = parseInt(this.dataset.page);
-            if (nextPage >= 0 && nextPage < ${paging.totalPages}) { // 다음 페이지가 있는지 확인
-                document.getElementById('page').value = nextPage;
-                document.getElementById('searchForm').submit();
-            }
+            document.getElementById('page').value = nextPage;
+            document.getElementById('searchForm').submit();
         });
     });
-
     const btn_search = document.getElementById("btn_search");
     btn_search.addEventListener('click', function () {
         document.getElementById('kw').value = document.getElementById('search_kw').value;
@@ -108,7 +98,7 @@
         document.getElementById('searchForm').submit();
     });
 
-    // 엔터 키로 검색 버튼 클릭 이벤트 추가
+    <!-- 엔터 키로 검색 버튼 클릭 이벤트 추가 -->
     document.getElementById('search_kw').addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
             btn_search.click();

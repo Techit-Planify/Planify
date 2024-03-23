@@ -5,16 +5,11 @@ import com.ll.planify.domain.todo.todo.entity.Todo;
 import com.ll.planify.domain.todo.todo.entity.TodoPriority;
 import com.ll.planify.domain.todo.todo.entity.TodoStatus;
 import com.ll.planify.domain.todo.todo.repository.TodoRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +32,7 @@ public class TodoService {
         return todo.getId();
     }
 
-    // 목록 조회 - 페이징
+    // 전체 조회 - 페이징
     public Page<Todo> getTodos(int page, String kw) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("id"));
@@ -45,16 +40,11 @@ public class TodoService {
         return this.todoRepository.findAllByKeyword(kw, pageable);
     }
 
-    // 목록 조회 - 내용
-    public List<Todo> findTodos() {
-        return todoRepository.findAll();
-    }
-
     @Transactional
     public void completeTodo(Long todoId) {
-        Optional<Todo> todoOptional = todoRepository.findById(todoId);
+        Optional<Todo> todoOpt = todoRepository.findById(todoId);
 
-        todoOptional.ifPresent(todo -> {
+        todoOpt.ifPresent(todo -> {
             if (!todo.getStatus().equals(TodoStatus.완료)) {
                 todo.setStatus(TodoStatus.완료);
                 todoRepository.save(todo);
@@ -98,16 +88,5 @@ public class TodoService {
             return stringBuilder.toString().trim();
         }
         return "";
-    }
-
-    private Specification<Todo> search(String kw) {
-        return new Specification<>() {
-            private static final long serialVersionUID = 1L;
-            @Override
-            public Predicate toPredicate(Root<Todo> q, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                query.distinct(true); // 중복 제거
-                return cb.or(cb.like(q.get("content"), "%" + kw + "%"));
-            }
-        };
     }
 }

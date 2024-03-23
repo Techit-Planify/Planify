@@ -1,12 +1,16 @@
 package com.ll.planify.domain.todo.todo.controller;
 
+import com.ll.planify.domain.member.member.entity.Member;
+import com.ll.planify.domain.member.member.repository.MemberRepository;
 import com.ll.planify.domain.todo.todo.entity.Todo;
 import com.ll.planify.domain.todo.todo.entity.TodoStatus;
 import com.ll.planify.domain.todo.todo.service.HashtagService;
 import com.ll.planify.domain.todo.todo.service.TodoService;
+import com.ll.planify.global.security.CustomUserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,19 +27,25 @@ public class TodoController {
 
     private final TodoService todoService;
     private final HashtagService hashtagService;
+    private final MemberRepository memberRepository;
 
     @GetMapping("/create")
     public String createForm(Model model) {
-        model.addAttribute("todoForm", new TodoForm());
+        TodoForm todoForm = new TodoForm();
+        model.addAttribute("todoForm", todoForm);
         return "domain/todo/todo/createTodoForm";
     }
 
     @PostMapping("/create")
-    public String create(@Valid TodoForm form, BindingResult result) {
+    public String create(@Valid TodoForm form, BindingResult result,
+                         @AuthenticationPrincipal CustomUserDetails user) {
 
         if (result.hasErrors()) {
             return "domain/todo/todo/createTodoForm";
         }
+
+        Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
+        Member member = opMember.get();
 
         // 날짜를 문자열로 변환하여 설정
         form.setDeadline(form.getDeadline().toString());
@@ -48,10 +58,22 @@ public class TodoController {
         todo.setDeadline(LocalDate.parse(form.getDeadline())); // 문자열을 다시 LocalDate로 변환하여 설정
         todo.setPriority(form.getPriority());
         todo.setStatus(TodoStatus.진행중);
+        todo.setMember(member);
 
         todoService.save(todo);
         hashtagService.addHashtags(todo, hashtagStr);
         return "redirect:/";
+    }
+
+    @GetMapping("/{todoId}/detail")
+    public String showTodoDetail(@PathVariable Long todoId, Model model) {
+        Optional<Todo> optTodo = todoService.findByTodoId(todoId);
+
+        if (optTodo.isPresent()) {
+            Todo todo = optTodo.get();
+            model.addAttribute("todo", todo);
+        }
+        return "domain/todo/todo/todoDetail";
     }
 
     @GetMapping("/list")

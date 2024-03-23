@@ -1,21 +1,17 @@
-/* 콘텐츠를 약간 여백을 주세요 */
 body {
     padding-top: 20px;
     padding-bottom: 20px;
-}
-
-/* 모든 것이 jumbotron을 제외한 요소에는 모바일 우선 보기에서 측면 여백을 제공합니다 */
-.header,
-.marketing,
-.footer {
-    padding-left: 15px;
-    padding-right: 15px;
 }
 
 /* 사용자 정의 페이지 헤더 */
 .header {
     border-bottom: 1px solid #e5e5e5;
     margin-bottom: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .header h3 {
@@ -25,16 +21,6 @@ body {
     padding-bottom: 19px;
 }
 
-@media (min-width: 768px) {
-    .container {
-        max-width: 930px;
-    }
-    .container-narrow > hr {
-        margin: 30px 0;
-    }
-}
-
-/* 주요 마케팅 메시지와 가입 버튼 */
 .jumbotron {
     text-align: center;
     border-bottom: 1px solid #e5e5e5;
@@ -49,10 +35,12 @@ body {
     margin: 10px;
 }
 
+/* 필드 오류 스타일 */
 .fieldError {
     border-color: #bd2130;
 }
 
+/* 태그 컨테이너와 태그 스타일 */
 .tag-container {
     display: flex;
     flex-wrap: wrap;
@@ -73,6 +61,10 @@ body {
     margin-right: 5px;
 }
 
-.tag-delete {
-    cursor: pointer;
+.todo-content {
+    color: black;
+}
+
+.todo-content:hover {
+    color: #005cbf;
 }
