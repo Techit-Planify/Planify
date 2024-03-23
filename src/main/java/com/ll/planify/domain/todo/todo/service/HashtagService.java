@@ -5,14 +5,12 @@ import com.ll.planify.domain.todo.todo.entity.Keyword;
 import com.ll.planify.domain.todo.todo.entity.Todo;
 import com.ll.planify.domain.todo.todo.repository.HashtagRepository;
 import com.ll.planify.domain.todo.todo.repository.TodoRepository;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,7 +25,7 @@ public class HashtagService {
     public void addHashtags(Todo todo, String keywordContentsStr) {
         List<String> keywordContents = Arrays.stream(keywordContentsStr.split("#"))
                 .map(String::trim)
-                .filter(s -> s.length() > 0)
+                .filter(s -> !s.isEmpty())
                 .collect(Collectors.toList());
 
         keywordContents.forEach(keywordContent ->
@@ -35,50 +33,37 @@ public class HashtagService {
     }
 
     @Transactional
-    public Hashtag saveHashtag(Todo todo, String keywordContent) {
+    public void saveHashtag(Todo todo, String keywordContent) {
         Keyword keyword = keywordService.save("#" + keywordContent);
 
-        Optional<Hashtag> opHashtag = hashtagRepository.findByTodoIdAndKeyword(todo.getId(), keyword);
-
-        return opHashtag.orElseGet(() -> {
-            Hashtag hashtag = Hashtag.builder()
-                    .todo(todo)
-                    .keyword(keyword)
-                    .build();
-            return hashtagRepository.save(hashtag);
-        });
+        hashtagRepository.findByTodoIdAndKeyword(todo.getId(), keyword)
+                .orElseGet(() -> {
+                    Hashtag newHashtag = new Hashtag();
+                    newHashtag.setTodo(todo);
+                    newHashtag.setKeyword(keyword);
+                    return hashtagRepository.save(newHashtag);
+                });
     }
 
     // 해시태그 수정 및 삭제
     @Transactional
     public void updateHashtags(Long todoId, String keywordContentsStr) {
-        Optional<Todo> optionalTodo = todoRepository.findById(todoId);
+        Todo todo = todoRepository.findById(todoId)
+                .orElseThrow(() -> new RuntimeException("Todo not found"));
 
-        optionalTodo.ifPresent(todo -> {
-            hashtagRepository.removeHashtagsByTodoId(todoId);
-
-            addHashtags(todo, keywordContentsStr);
-
-            List<Hashtag> hashtags = hashtagRepository.findByTodoId(todoId);
-            hashtags.forEach(hashtag -> removeUnusedHashtags(hashtag.getKeyword().getId()));
-        });
-
-        // 사용되지 않는 키워드 삭제
-        List<Keyword> allKeywords = keywordService.getAllKeywords();
-        allKeywords.forEach(keyword -> {
-            List<Hashtag> hashtagsUsingKeyword = hashtagRepository.findByKeywordId(keyword.getId());
-            if (hashtagsUsingKeyword.isEmpty()) {
-                keywordService.deleteKeyword(keyword.getId());
-            }
-        });
+        Long memberId = todo.getMember().getId();
+        hashtagRepository.removeHashtagsByTodoId(todoId);
+        addHashtags(todo, keywordContentsStr);
+        removeUnusedKeywords(memberId); // 더 이상 사용되지 않는 키워드 삭제
     }
 
     @Transactional
-    public void removeUnusedHashtags(Long keywordId) {
-        List<Hashtag> hashtags = hashtagRepository.findByKeywordId(keywordId);
-
-        if (hashtags.isEmpty()) {
-            keywordService.deleteKeyword(keywordId);
-        }
+    public void removeUnusedKeywords(Long memberId) {
+        List<Keyword> allKeywords = keywordService.getAllKeywords(memberId);
+        allKeywords.forEach(keyword -> {
+            if (hashtagRepository.findByKeywordId(keyword.getId()).isEmpty()) {
+                keywordService.deleteKeyword(keyword.getId());
+            }
+        });
     }
 }

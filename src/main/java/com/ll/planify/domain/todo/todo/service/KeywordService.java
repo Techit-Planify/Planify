@@ -34,8 +34,8 @@ public class KeywordService {
         return keyword;
     }
 
-    public List<Keyword> getAllKeywords() {
-        return keywordRepository.findAll();
+    public List<Keyword> getAllKeywords(Long memberId) {
+        return keywordRepository.findKeywordById(memberId);
     }
 
     @Transactional
