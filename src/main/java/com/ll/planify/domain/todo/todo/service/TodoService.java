@@ -33,7 +33,7 @@ public class TodoService {
         return todo.getId();
     }
 
-    // 전체 조회 - 페이징
+    // 키워드로 조회
     public Page<Todo> getTodosByMember(int page, String kw, Member member) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("id"));
@@ -91,5 +91,13 @@ public class TodoService {
             return stringBuilder.toString().trim();
         }
         return "";
+    }
+
+    // 해시태그로 조회
+    public Page<Todo> getTodosByMemberAndTag(int page, String kw, String tag, Member member) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("id"));
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        return this.todoRepository.findByTagAndMemberAndContentContaining(tag, kw, member, pageable);
     }
 }

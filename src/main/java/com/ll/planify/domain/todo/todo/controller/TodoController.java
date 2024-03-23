@@ -86,20 +86,28 @@ public class TodoController {
     }
 
     @GetMapping("/list")
-    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+    public String list(Model model,
+                       @RequestParam(value = "page", defaultValue = "0") int page,
                        @RequestParam(value = "kw", defaultValue = "") String kw,
+                       @RequestParam(value = "tag", required = false) String tag,
                        @AuthenticationPrincipal CustomUserDetails user) {
         Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
-        if (!opMember.isPresent()) {
+        if (opMember.isEmpty()) {
             return "redirect:/";
         }
 
         Member member = opMember.get();
-        Page<Todo> paging = this.todoService.getTodosByMember(page, kw, member);
+        Page<Todo> paging;
+        if (tag != null && !tag.trim().isEmpty()) {
+            paging = this.todoService.getTodosByMemberAndTag(page, kw, tag, member);
+        } else {
+            paging = this.todoService.getTodosByMember(page, kw, member);
+        }
         List<Todo> todos = paging.getContent();
 
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
+        model.addAttribute("tag", tag);
         model.addAttribute("todos", todos);
         return "domain/todo/todo/todoList";
     }

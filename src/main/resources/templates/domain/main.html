@@ -33,7 +33,8 @@
             <div class="tag-container">
                 <div class="tags d-flex flex-wrap">
                     <span class="tag" th:each="keyword : ${keywords}">
-                        <a href="#" class="tag-text" th:text="${keyword.content}">태그</a>
+                        <a th:href="@{/todo/list(tag=${keyword.content})}" class="tag-text"
+                           th:text="${keyword.content}">태그</a>
                     </span>
                 </div>
             </div>

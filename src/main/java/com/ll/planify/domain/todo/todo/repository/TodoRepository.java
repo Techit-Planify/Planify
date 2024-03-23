@@ -24,4 +24,14 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
             + "like %:kw% "
             + "and q.member = :member")
     Page<Todo> findAllByKeyword(@Param("kw") String kw, Member member, Pageable pageable);
+
+    @Query("select t "
+            + "FROM Todo t "
+            + "JOIN t.hashtags h "
+            + "WHERE "
+            + "h.keyword.content = :tag "
+            + "AND t.member = :member "
+            + "AND t.content "
+            + "LIKE %:kw%")
+    Page<Todo> findByTagAndMemberAndContentContaining(String tag, String kw, Member member, Pageable pageable);
 }
