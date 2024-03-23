@@ -1,5 +1,6 @@
 package com.ll.planify.domain.todo.todo.service;
 
+import com.ll.planify.domain.member.member.entity.Member;
 import com.ll.planify.domain.todo.todo.entity.Hashtag;
 import com.ll.planify.domain.todo.todo.entity.Todo;
 import com.ll.planify.domain.todo.todo.entity.TodoPriority;
@@ -33,16 +34,16 @@ public class TodoService {
     }
 
     // 전체 조회 - 페이징
-    public Page<Todo> getTodos(int page, String kw) {
+    public Page<Todo> getTodosByMember(int page, String kw, Member member) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("id"));
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        return this.todoRepository.findAllByKeyword(kw, pageable);
+        return this.todoRepository.findAllByKeyword(kw, member, pageable);
     }
 
     @Transactional
-    public void completeTodo(Long todoId) {
-        Optional<Todo> todoOpt = todoRepository.findById(todoId);
+    public void completeTodo(Long todoId, Member member) {
+        Optional<Todo> todoOpt = todoRepository.findByIdAndMember(todoId, member);
 
         todoOpt.ifPresent(todo -> {
             if (!todo.getStatus().equals(TodoStatus.완료)) {
@@ -52,13 +53,14 @@ public class TodoService {
         });
     }
 
-    public Optional<Todo> findByTodoId(Long todoId) {
-        return todoRepository.findById(todoId);
+    public Optional<Todo> findByTodoId(Long todoId, Member member) {
+        return todoRepository.findByIdAndMember(todoId, member);
     }
 
     @Transactional
-    public void updateTodo(Long todoId, String content, LocalDate deadline, TodoPriority priority) {
-        Optional<Todo> getTodo = todoRepository.findById(todoId);
+    public void updateTodo(Long todoId, String content, LocalDate deadline,
+                           TodoPriority priority, Member member) {
+        Optional<Todo> getTodo = todoRepository.findByIdAndMember(todoId, member);
 
         if (getTodo.isPresent()) {
 
@@ -72,12 +74,13 @@ public class TodoService {
     }
 
     @Transactional
-    public void deleteTodo(Long todoId) {
-        todoRepository.deleteById(todoId);
+    public void deleteTodo(Long todoId, Member member) {
+        todoRepository.deleteByIdAndMember(todoId, member);
     }
 
-    public String getHashtagsAsString(Long todoId) {
-        Optional<Todo> todoOptional = todoRepository.findById(todoId);
+    public String getHashtagsAsString(Long todoId, Member member) {
+        Optional<Todo> todoOptional = todoRepository.findByIdAndMember(todoId, member);
+
         if (todoOptional.isPresent()) {
             Todo todo = todoOptional.get();
             List<Hashtag> hashtags = todo.getHashtags();

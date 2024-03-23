@@ -66,20 +66,36 @@ public class TodoController {
     }
 
     @GetMapping("/{todoId}/detail")
-    public String showTodoDetail(@PathVariable Long todoId, Model model) {
-        Optional<Todo> optTodo = todoService.findByTodoId(todoId);
+    public String showTodoDetail(@PathVariable Long todoId, Model model,
+                                 @AuthenticationPrincipal CustomUserDetails user) {
+        Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
+
+        if (!opMember.isPresent()) {
+            return "redirect:/";
+        }
+        Member member = opMember.get();
+        Optional<Todo> optTodo = todoService.findByTodoId(todoId, member);
 
         if (optTodo.isPresent()) {
             Todo todo = optTodo.get();
             model.addAttribute("todo", todo);
+        } else {
+            return "redirect:/todo/list";
         }
         return "domain/todo/todo/todoDetail";
     }
 
     @GetMapping("/list")
     public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
-                       @RequestParam(value = "kw", defaultValue = "") String kw) {
-        Page<Todo> paging = this.todoService.getTodos(page, kw);
+                       @RequestParam(value = "kw", defaultValue = "") String kw,
+                       @AuthenticationPrincipal CustomUserDetails user) {
+        Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
+        if (!opMember.isPresent()) {
+            return "redirect:/";
+        }
+
+        Member member = opMember.get();
+        Page<Todo> paging = this.todoService.getTodosByMember(page, kw, member);
         List<Todo> todos = paging.getContent();
 
         model.addAttribute("paging", paging);
@@ -89,14 +105,29 @@ public class TodoController {
     }
 
     @GetMapping("/{todoId}/complete")
-    public String completeTodo(@PathVariable Long todoId) {
-        todoService.completeTodo(todoId);
+    public String completeTodo(@PathVariable Long todoId, @AuthenticationPrincipal CustomUserDetails user) {
+        Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
+
+        if (!opMember.isPresent()) {
+            return "redirect:/";
+        }
+        Member member = opMember.get();
+
+        todoService.completeTodo(todoId, member);
         return "redirect:/todo/list";
     }
 
     @GetMapping("/{todoId}/update")
-    public String updateTodoForm(@PathVariable("todoId") Long todoId, Model model) {
-        Optional<Todo> getTodo = todoService.findByTodoId(todoId);
+    public String updateTodoForm(@PathVariable("todoId") Long todoId, Model model,
+                                 @AuthenticationPrincipal CustomUserDetails user) {
+        Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
+
+        if (!opMember.isPresent()) {
+            return "redirect:/";
+        }
+        Member member = opMember.get();
+
+        Optional<Todo> getTodo = todoService.findByTodoId(todoId, member);
         TodoForm form = new TodoForm();
 
         if (getTodo.isPresent()) {
@@ -104,7 +135,7 @@ public class TodoController {
             form.setContent(todo.getContent());
             form.setDeadline(todo.getDeadline().toString()); // LocalDate를 문자열로 변환하여 설정
             form.setPriority(todo.getPriority());
-            form.setTag(todoService.getHashtagsAsString(todoId));
+            form.setTag(todoService.getHashtagsAsString(todoId, member));
         }
 
         model.addAttribute("form", form);
@@ -112,18 +143,33 @@ public class TodoController {
     }
 
     @PostMapping("/{todoId}/update")
-    public String updateTodo(@PathVariable Long todoId, @ModelAttribute("form") TodoForm form) {
+    public String updateTodo(@PathVariable Long todoId, @ModelAttribute("form") TodoForm form,
+                             @AuthenticationPrincipal CustomUserDetails user) {
+        Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
+
+        if (!opMember.isPresent()) {
+            return "redirect:/";
+        }
+        Member member = opMember.get();
+
         // 문자열로 변환된 deadline을 다시 LocalDate로 변환하여 설정
         LocalDate deadline = LocalDate.parse(form.getDeadline());
 
-        todoService.updateTodo(todoId, form.getContent(), deadline, form.getPriority());
+        todoService.updateTodo(todoId, form.getContent(), deadline, form.getPriority(), member);
         hashtagService.updateHashtags(todoId, form.getTag());
         return "redirect:/todo/list";
     }
 
     @GetMapping("/{todoId}/delete")
-    public String deleteTodo(@PathVariable Long todoId) {
-        todoService.deleteTodo(todoId);
+    public String deleteTodo(@PathVariable Long todoId, @AuthenticationPrincipal CustomUserDetails user) {
+        Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
+
+        if (!opMember.isPresent()) {
+            return "redirect:/";
+        }
+        Member member = opMember.get();
+
+        todoService.deleteTodo(todoId, member);
         return "redirect:/todo/list";
     }
 }
