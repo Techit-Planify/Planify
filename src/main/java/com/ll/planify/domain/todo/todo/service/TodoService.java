@@ -92,4 +92,8 @@ public class TodoService {
         }
         return "";
     }
+
+    public List<Todo> getTodosInProgress(Long memberId) {
+        return todoRepository.findByMemberIdAndStatus(memberId, TodoStatus.진행중);
+    }
 }

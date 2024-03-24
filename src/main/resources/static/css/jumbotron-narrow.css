@@ -3,7 +3,6 @@ body {
     padding-bottom: 20px;
 }
 
-/* 사용자 정의 페이지 헤더 */
 .header {
     border-bottom: 1px solid #e5e5e5;
     margin-bottom: 20px;
@@ -21,26 +20,39 @@ body {
     padding-bottom: 19px;
 }
 
-.jumbotron {
-    text-align: center;
-    border-bottom: 1px solid #e5e5e5;
-    margin-bottom: 20px;
-}
-
-.jumbotron .btn {
-    font-size: 21px;
-    width: 200px;
-    height: 50px;
-    display: inline-block;
-    margin: 10px;
-}
-
-/* 필드 오류 스타일 */
 .fieldError {
     border-color: #bd2130;
 }
 
-/* 태그 컨테이너와 태그 스타일 */
+.jumbotron {
+    text-align: center;
+    border: 1px solid #e5e5e5;
+    background-color: transparent;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.jumbotron p {
+    margin-bottom: 10px;
+}
+
+.jumbotron .btn {
+    font-size: 20px;
+    width: 180px;
+    height: 50px;
+    display: inline-block;
+    margin: 10px;
+    border: 2px solid #007bff;
+    color: #007bff;
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 */
+}
+
+.jumbotron .btn:hover {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
 .tag-container {
     display: flex;
     flex-wrap: wrap;
@@ -67,4 +79,28 @@ body {
 
 .todo-content:hover {
     color: #005cbf;
+}
+
+.todo-list {
+    list-style: none;
+    padding: 0;
+}
+
+.todo-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.todo-item-icon {
+    margin-right: 15px;
+    color: #666;
+}
+
+.todo-item-content {
+    flex: 1;
 }

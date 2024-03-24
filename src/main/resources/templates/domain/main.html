@@ -19,15 +19,23 @@
                     <a class="btn btn-lg btn-primary" th:href="@{/todo/create}">새로운 할 일 등록</a>
                 </p>
                 <p>
-                    <a class="btn btn-lg btn-success" th:href="@{/todo/list(status=진행중)}">TO-DO</a>
+                    <a class="btn btn-lg btn-success" th:href="@{/todo/list(status='진행중')}">TO-DO</a>
                     <a class="btn btn-lg btn-secondary" th:href="@{/todo/list}">ALL</a>
                 </p>
-                <p>
-                    <a class="btn btn-lg btn-info" href="items">마감일 임박</a>
-                    <a class="btn btn-lg btn-dark" href="items/new">완료됨</a>
-                </p>
+            </div>
+
+            <h3>진행 중인 할 일</h3>
+            <div class="todo-container">
+                <ul class="todo-list">
+                    <li th:each="todo : ${todosInProgress}" th:if="${todo.status.name() == '진행중'}"
+                        class="todo-item">
+                        <span class="todo-item-icon">&#x2714;</span> <!-- 체크 아이콘 -->
+                        <span class="todo-item-content" th:text="${todo.content}">할 일 내용</span>
+                    </li>
+                </ul>
             </div>
         </div>
+
         <div class="col-md-3">
             <h3>태그</h3>
             <div class="tag-container">

@@ -1,7 +1,9 @@
 package com.ll.planify.domain;
 
 import com.ll.planify.domain.todo.todo.entity.Keyword;
+import com.ll.planify.domain.todo.todo.entity.Todo;
 import com.ll.planify.domain.todo.todo.service.KeywordService;
+import com.ll.planify.domain.todo.todo.service.TodoService;
 import com.ll.planify.global.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,7 @@ import java.util.List;
 public class MainController {
 
     private final KeywordService keywordService;
+    private final TodoService todoService;
 
     @RequestMapping("/")
     public String main(Model model, @AuthenticationPrincipal CustomUserDetails user) {
@@ -27,6 +30,9 @@ public class MainController {
 
         List<Keyword> keywords = keywordService.getAllKeywords(memberId);
         model.addAttribute("keywords", keywords);
+
+        List<Todo> todosInProgress = todoService.getTodosInProgress(memberId);
+        model.addAttribute("todosInProgress", todosInProgress);
 
         log.info("main controller for user: {}", memberId);
         return "domain/main";
