@@ -29,8 +29,10 @@
 
         <div class="form-group">
             <label>태그</label>
-            <div th:each="hashtag : ${todo.hashtags}">
-                <input type="text" th:value="${hashtag.keyword.content}" readonly class="form-control"/>
+            <div style="display: flex; flex-wrap: wrap;">
+                <div th:each="hashtag : ${todo.hashtags}" class="tag">
+                    <span th:text="${hashtag.keyword.content}" class="tag-text"></span>
+                </div>
             </div>
         </div>
 
