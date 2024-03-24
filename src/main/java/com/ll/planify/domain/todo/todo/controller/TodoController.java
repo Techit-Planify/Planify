@@ -70,7 +70,7 @@ public class TodoController {
                                  @AuthenticationPrincipal CustomUserDetails user) {
         Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
 
-        if (!opMember.isPresent()) {
+        if (opMember.isEmpty()) {
             return "redirect:/";
         }
         Member member = opMember.get();
@@ -116,7 +116,7 @@ public class TodoController {
     public String completeTodo(@PathVariable Long todoId, @AuthenticationPrincipal CustomUserDetails user) {
         Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
 
-        if (!opMember.isPresent()) {
+        if (opMember.isEmpty()) {
             return "redirect:/";
         }
         Member member = opMember.get();
@@ -130,7 +130,7 @@ public class TodoController {
                                  @AuthenticationPrincipal CustomUserDetails user) {
         Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
 
-        if (!opMember.isPresent()) {
+        if (opMember.isEmpty()) {
             return "redirect:/";
         }
         Member member = opMember.get();
@@ -155,7 +155,7 @@ public class TodoController {
                              @AuthenticationPrincipal CustomUserDetails user) {
         Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
 
-        if (!opMember.isPresent()) {
+        if (opMember.isEmpty()) {
             return "redirect:/";
         }
         Member member = opMember.get();
@@ -172,7 +172,7 @@ public class TodoController {
     public String deleteTodo(@PathVariable Long todoId, @AuthenticationPrincipal CustomUserDetails user) {
         Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
 
-        if (!opMember.isPresent()) {
+        if (opMember.isEmpty()) {
             return "redirect:/";
         }
         Member member = opMember.get();
