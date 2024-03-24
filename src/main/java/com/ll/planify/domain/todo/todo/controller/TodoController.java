@@ -45,13 +45,13 @@ public class TodoController {
         }
 
         Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
+        if (opMember.isEmpty()) {
+            return "redirect:/";
+        }
         Member member = opMember.get();
 
         // 날짜를 문자열로 변환하여 설정
         form.setDeadline(form.getDeadline().toString());
-
-        // 태그 분리
-        String hashtagStr = form.getTag();
 
         Todo todo = new Todo();
         todo.setContent(form.getContent());
@@ -61,7 +61,12 @@ public class TodoController {
         todo.setMember(member);
 
         todoService.save(todo);
-        hashtagService.addHashtags(todo, hashtagStr);
+
+        // 태그가 있다면 태그 분리해서 등록
+        String hashtagStr = form.getTag();
+        if (hashtagStr != null && !hashtagStr.trim().isEmpty()) {
+            hashtagService.addHashtags(todo, hashtagStr);
+        }
         return "redirect:/";
     }
 
@@ -90,19 +95,19 @@ public class TodoController {
                        @RequestParam(value = "page", defaultValue = "0") int page,
                        @RequestParam(value = "kw", defaultValue = "") String kw,
                        @RequestParam(value = "tag", required = false) String tag,
+                       @RequestParam(value = "status", required = false) TodoStatus status,
                        @AuthenticationPrincipal CustomUserDetails user) {
+
         Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
         if (opMember.isEmpty()) {
             return "redirect:/";
         }
-
         Member member = opMember.get();
+
         Page<Todo> paging;
-        if (tag != null && !tag.trim().isEmpty()) {
-            paging = this.todoService.getTodosByMemberAndTag(page, kw, tag, member);
-        } else {
-            paging = this.todoService.getTodosByMember(page, kw, member);
-        }
+
+        paging = this.todoService.getTodosByCriteria(page, kw, tag, status, member);
+
         List<Todo> todos = paging.getContent();
 
         model.addAttribute("paging", paging);

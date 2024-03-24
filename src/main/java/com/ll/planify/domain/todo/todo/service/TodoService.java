@@ -41,6 +41,22 @@ public class TodoService {
         return this.todoRepository.findAllByKeyword(kw, member, pageable);
     }
 
+    // 해시태그로 조회
+    public Page<Todo> getTodosByMemberAndTag(int page, String kw, String tag, Member member) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("id"));
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        return this.todoRepository.findByTagAndMemberAndContentContaining(tag, kw, member, pageable);
+    }
+
+    public Page<Todo> getTodosByCriteria(int page, String kw, String tag,
+                                         TodoStatus status, Member member) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("id"));
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        return this.todoRepository.findAllByCriteria(kw, tag, status, member, pageable);
+    }
+
     @Transactional
     public void completeTodo(Long todoId, Member member) {
         Optional<Todo> todoOpt = todoRepository.findByIdAndMember(todoId, member);
@@ -91,13 +107,5 @@ public class TodoService {
             return stringBuilder.toString().trim();
         }
         return "";
-    }
-
-    // 해시태그로 조회
-    public Page<Todo> getTodosByMemberAndTag(int page, String kw, String tag, Member member) {
-        List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("id"));
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        return this.todoRepository.findByTagAndMemberAndContentContaining(tag, kw, member, pageable);
     }
 }
