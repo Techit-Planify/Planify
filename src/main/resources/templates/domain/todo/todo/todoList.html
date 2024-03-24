@@ -22,7 +22,8 @@
         <table class="table table-hover">
             <thead class="table-light">
             <tr>
-                <th style="white-space: nowrap; ">#</th>
+                <th style="white-space: nowrap; width: 30px;">#</th>
+                <th style="white-space: nowrap; width: 80px;"></th>
                 <th style="white-space: nowrap;">할 일</th>
                 <th style="white-space: nowrap;">마감일</th>
                 <th style="white-space: nowrap;">우선순위</th>
@@ -34,6 +35,10 @@
             <tr th:each="todo : ${todos}" th:id="'todo-' + ${todo.id}">
                 <td th:text="${todo.id}"></td>
                 <td>
+                    <a th:if="${todo.status.name() != '완료'}" th:href="@{/todo/{id}/complete (id=${todo.id})}"
+                       class="btn btn-success" role="button">완료</a>
+                </td>
+                <td>
                     <a class="todo-content" th:text="${todo.content}" th:href="@{/todo/{id}/detail (id=${todo.id})}"></a>
                 </td>
                 <td th:text="${todo.deadline}"></td>
@@ -43,10 +48,6 @@
                     <span th:each="hashtag : ${todo.hashtags}">
                         <span th:text="${hashtag.keyword.content}"></span>
                     </span>
-                </td>
-                <td>
-                    <a th:href="@{/todo/{id}/complete (id=${todo.id})}" class="btn btn-success" role="button"
-                       style="white-space: nowrap;">완료</a>
                 </td>
             </tr>
             </tbody>
