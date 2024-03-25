@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <div class="header" th:fragment="bodyHeader">
-    <a href="/"><h2 class="text-muted">Planify</h2></a>
+    <a href="/"><h2>Planify</h2></a>
     <a class="login-link" sec:authorize="isAnonymous()" th:href="@{/member/login}">LOGIN</a>
     <a class="login-link" sec:authorize="isAuthenticated()" th:href="@{/member/logout}">LOGOUT</a>
 </div>

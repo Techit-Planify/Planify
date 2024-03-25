@@ -7,25 +7,61 @@
 
 <body>
 <div class="container">
-
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
-
     <div class="row">
-        <div class="col-md-8">
+
+        <div class="col-md-9">
             <div class="jumbotron">
                 <h1>Planify</h1>
                 <p class="lead">간편하게 할 일을 관리하세요 !</p>
-                <p>
-                    <a class="btn btn-lg btn-primary" th:href="@{/todo/create}">새로운 할 일 등록</a>
-                </p>
-                <p>
-                    <a class="btn btn-lg btn-success" th:href="@{/todo/list(status='진행중')}">TO-DO</a>
-                    <a class="btn btn-lg btn-se condary" th:href="@{/todo/list}">ALL</a>
-                </p>
+                <div class="row">
+
+                    <div class="col-sm-4">
+                        <a th:href="@{/todo/create}" style="text-decoration:none;">
+                            <div class="card">
+                                <div class="icon-container icon-new">
+                                    <i class="fas fa-plus-circle card-icon"></i>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">NEW</h5>
+                                    <p class="card-text">새로운 할 일을 등록하세요.</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <a th:href="@{/todo/list(status='진행중')}" style="text-decoration:none;">
+                            <div class="card">
+                                <div class="icon-container icon-pg">
+                                    <i class="fas fa-tasks card-icon"></i>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">TO-DO</h5>
+                                    <p class="card-text">현재 진행 중인 할 일을 확인하세요.</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <a th:href="@{/todo/list}" style="text-decoration:none;">
+                            <div class="card">
+                                <div class="icon-container icon-all">
+                                    <i class="fas fa-list-ul card-icon"></i>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">ALL</h5>
+                                    <p class="card-text">모든 할 일 목록을 확인하세요.</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
 
-            <h3>진행 중인 할 일</h3>
             <div class="todo-container">
+                <h3>진행 중인 할 일</h3>
                 <ul class="todo-list">
                     <li th:each="todo : ${todosInProgress}" th:if="${todo.status.name() == '진행중'}"
                         class="todo-item">
@@ -51,13 +87,13 @@
 </div>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // URL에서 쿼리 파라미터 확인
         const urlParams = new URLSearchParams(window.location.search);
         const todoCreated = urlParams.get('todoCreated');
 
         // 'todoCreated' 쿼리 파라미터가 'true'일 경우 알림 표시
-        if(todoCreated === 'true') {
+        if (todoCreated === 'true') {
             toastr.options = {
                 closeButton: true,
                 progressBar: true,
