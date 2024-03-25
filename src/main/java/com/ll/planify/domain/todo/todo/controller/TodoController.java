@@ -67,7 +67,7 @@ public class TodoController {
         if (hashtagStr != null && !hashtagStr.trim().isEmpty()) {
             hashtagService.addHashtags(todo, hashtagStr);
         }
-        return "redirect:/";
+        return "redirect:/?todoCreated=true";
     }
 
     @GetMapping("/{todoId}/detail")

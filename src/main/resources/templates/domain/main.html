@@ -20,7 +20,7 @@
                 </p>
                 <p>
                     <a class="btn btn-lg btn-success" th:href="@{/todo/list(status='진행중')}">TO-DO</a>
-                    <a class="btn btn-lg btn-secondary" th:href="@{/todo/list}">ALL</a>
+                    <a class="btn btn-lg btn-se condary" th:href="@{/todo/list}">ALL</a>
                 </p>
             </div>
 
@@ -48,7 +48,25 @@
             </div>
         </div>
     </div>
-
 </div>
+
+<script>
+    $(document).ready(function() {
+        // URL에서 쿼리 파라미터 확인
+        const urlParams = new URLSearchParams(window.location.search);
+        const todoCreated = urlParams.get('todoCreated');
+
+        // 'todoCreated' 쿼리 파라미터가 'true'일 경우 알림 표시
+        if(todoCreated === 'true') {
+            toastr.options = {
+                closeButton: true,
+                progressBar: true,
+                showMethod: 'slideDown',
+                timeOut: 4000
+            };
+            toastr.success('할 일이 성공적으로 등록되었습니다!');
+        }
+    });
+</script>
 </body>
 </html>
