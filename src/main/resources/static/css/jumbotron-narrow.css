@@ -74,7 +74,7 @@ body {
     border-radius: 10px;
 }
 
-.todo-container, .col-md-3 {
+.todo-container, .col-md-3, .col-md-4 {
     border: 1px solid #e5e5e5;
     background-color: #FFFFFF;
     margin-bottom: 20px;
@@ -82,12 +82,12 @@ body {
     border-radius: 10px;
 }
 
-.todo-container h3, .col-md-3 h3, .jumbotron h1, .jumbotron p {
+.todo-container h3, .col-md-3 h3, .jumbotron h1, .jumbotron p, .col-md-4 h3 {
     color: #25396F;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
-.todo-container h3, .tag-container h3 {
+.todo-container h3, .tag-container h3, .col-md-4 h3 {
     margin-bottom: 20px;
 }
 
@@ -208,4 +208,13 @@ body {
 
 .table-body {
     justify-content: center;
+}
+
+.progress-bar {
+    height: 100%;
+    text-align: center;
+    background-color: #435EBE;
+    color: white;
+    white-space: nowrap;
+    border-radius: 5px;
 }

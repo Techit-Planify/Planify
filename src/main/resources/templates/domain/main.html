@@ -60,15 +60,30 @@
                 </div>
             </div>
 
-            <div class="todo-container">
-                <h3>진행 중인 할 일</h3>
-                <ul class="todo-list">
-                    <li th:each="todo : ${todosInProgress}" th:if="${todo.status.name() == '진행중'}"
-                        class="todo-item">
-                        <span class="todo-item-icon">&#x2714;</span> <!-- 체크 아이콘 -->
-                        <span class="todo-item-content" th:text="${todo.content}">할 일 내용</span>
-                    </li>
-                </ul>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="todo-container">
+                        <h3>진행 중인 할 일</h3>
+                        <ul class="todo-list">
+                            <li th:each="todo : ${todosInProgress}" th:if="${todo.status.name() == '진행중'}"
+                                class="todo-item">
+                                <span class="todo-item-icon">&#x2714;</span> <!-- 체크 아이콘 -->
+                                <span class="todo-item-content" th:text="${todo.content}">할 일 내용</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <h3>진행률</h3>
+                    <div class="progress">
+                        <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar"
+                             th:style="'width:' + ${completionRate} + '%'"
+                             th:attr="aria-valuenow=${completionRate}, aria-valuemin=0, aria-valuemax=100"
+                             th:text="${completionRate} + '%'">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -86,23 +101,23 @@
     </div>
 </div>
 
-<script>
-    $(document).ready(function () {
-        // URL에서 쿼리 파라미터 확인
-        const urlParams = new URLSearchParams(window.location.search);
-        const todoCreated = urlParams.get('todoCreated');
+    <script>
+        $(document).ready(function () {
+            // URL에서 쿼리 파라미터 확인
+            const urlParams = new URLSearchParams(window.location.search);
+            const todoCreated = urlParams.get('todoCreated');
 
-        // 'todoCreated' 쿼리 파라미터가 'true'일 경우 알림 표시
-        if (todoCreated === 'true') {
-            toastr.options = {
-                closeButton: true,
-                progressBar: true,
-                showMethod: 'slideDown',
-                timeOut: 4000
-            };
-            toastr.success('할 일이 성공적으로 등록되었습니다!');
-        }
-    });
-</script>
+            // 'todoCreated' 쿼리 파라미터가 'true'일 경우 알림 표시
+            if (todoCreated === 'true') {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 4000
+                };
+                toastr.success('할 일이 성공적으로 등록되었습니다!');
+            }
+        });
+    </script>
 </body>
 </html>

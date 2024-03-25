@@ -96,4 +96,10 @@ public class TodoService {
     public List<Todo> getTodosInProgress(Long memberId) {
         return todoRepository.findByMemberIdAndStatus(memberId, TodoStatus.진행중);
     }
+
+    public double calculateCompletionRate(Long memberId) {
+        long totalTasks = todoRepository.countByMemberId(memberId);
+        long completedTasks = todoRepository.countByMemberIdAndStatus(memberId, TodoStatus.완료);
+        return (totalTasks > 0) ? ((double) completedTasks / totalTasks) * 100 : 0;
+    }
 }

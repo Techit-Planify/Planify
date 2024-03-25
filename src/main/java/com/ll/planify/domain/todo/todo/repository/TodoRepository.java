@@ -30,4 +30,8 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
                                  Pageable pageable);
 
     List<Todo> findByMemberIdAndStatus(Long memberId, TodoStatus status);
+
+    long countByMemberId(Long memberId);
+
+    long countByMemberIdAndStatus(Long memberId, TodoStatus status);
 }

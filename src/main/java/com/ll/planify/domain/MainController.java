@@ -34,7 +34,10 @@ public class MainController {
         List<Todo> todosInProgress = todoService.getTodosInProgress(memberId);
         model.addAttribute("todosInProgress", todosInProgress);
 
-        log.info("main controller for user: {}", memberId);
+        double completionRate = todoService.calculateCompletionRate(memberId);
+        model.addAttribute("completionRate", completionRate);
+
+        log.info("main controller for user: {}, completionRate: {}", memberId, completionRate);
         return "domain/main";
     }
 }
