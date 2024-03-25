@@ -1,6 +1,13 @@
 server:
     port: 8080
+    servlet:
+      session:
+          timeout: 5m
 spring:
+    mvc:
+        hidden-method:
+            filter:
+                enabled: true
     profiles:
         active: dev
         include: secret
