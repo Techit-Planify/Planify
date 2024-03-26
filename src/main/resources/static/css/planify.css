@@ -24,33 +24,58 @@ body {
     padding-top: 20px;
     padding-bottom: 20px;
     background-color: #F2F7FF;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+
+div {
+    display: block;
 }
 
 .card {
-    min-height: 230px;
+    height: 100%;
+}
+
+.card-header {
+    background-color: #FFFFFF;
 }
 
 .card-body {
-    position: relative;
-    text-align: left;
+    flex: 1 1 auto;
+    padding: 32px 24px;
+    border-radius: 10px;
+    background-color: #FFFFFF;
 }
 
-.card-icon {
-    font-size: 50px;
+.card-text,
+.card-header h3 {
+    color: #25396F;
+    margin-bottom: 0px;
 }
 
-.icon-container {
-    width: 80px;
-    height: 80px;
+.card-text-bold {
+     font-weight: bold;
+}
+
+
+.col-md-4 {
+    padding: 10px 12px;
+}
+
+.stats-icon {
+    height: 70px;
+    width: 70px;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px;
-    margin-top: 20px;
-    margin-left: 20px;
     border-radius: 10px;
     color: #FFFFFF;
 }
+
+.stats-icon i {
+    font-size: 40px;
+}
+
 
 .icon-new {
     background-color: #9694FF;
@@ -64,77 +89,49 @@ body {
     background-color: #5FD9AC;
 }
 
-
-.jumbotron {
-    text-align: center;
-    border: 1px solid #e5e5e5;
-    background-color: #FFFFFF;
-    margin-bottom: 20px;
-    padding: 20px;
-    border-radius: 10px;
+.col-lg-3 {
+    flex: 0 0 auto;
+    width: 25%;
 }
 
-.todo-container, .col-md-3, .col-md-4 {
-    border: 1px solid #e5e5e5;
-    background-color: #FFFFFF;
-    margin-bottom: 20px;
-    padding: 20px;
-    border-radius: 10px;
+.row > .col-6 {
+    align-items: stretch;
 }
 
-.todo-container h3, .col-md-3 h3, .jumbotron h1, .jumbotron p, .col-md-4 h3 {
-    color: #25396F;
-    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+.row + .row {
+    margin-top: 20px;
 }
 
-.todo-container h3, .tag-container h3, .col-md-4 h3 {
-    margin-bottom: 20px;
-}
-
-.jumbotron h1, .jumbotron p {
-    margin-bottom: 10px;
-}
-
-.jumbotron .btn {
-    font-size: 20px;
-    width: 180px;
-    height: 50px;
-    display: inline-block;
-    margin: 10px;
-    border: 2px solid #435EBE;
-    color: #435EBE;
-    background-color: transparent;
-    transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 */
-}
-
-.jumbotron .btn:hover {
-    background-color: #435EBE;
-    color: #ffffff;
-}
 
 .tag-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
-}
-
-.tags {
-    margin-top: 10px;
+    gap: 10px;
 }
 
 .tag {
-    margin-right: 5px;
-    margin-bottom: 5px;
-    padding: 3px 8px;
+    margin: 5px 4px 5px 4px;
+    padding: 3px 7px;
     background-color: #f0f0f0;
-    border-radius: 15px;
-    display: inline-flex;
+    border-radius: 10px;
+    display: flex;
     align-items: center;
 }
 
 .tag-text {
     margin-right: 5px;
+    white-space: nowrap;
 }
+
+.tags {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 
 .todo-content {
     color: black;
