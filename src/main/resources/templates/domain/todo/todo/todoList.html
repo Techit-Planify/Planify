@@ -1,42 +1,113 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/header :: header" />
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/header :: header"/>
 <body>
 
 <div class="container">
-    <div th:replace="fragments/bodyHeader :: bodyHeader" />
-    <div>
-        <table class="table table-striped">
-            <thead>
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+    <div class="row my-3">
+        <div class="col-md-5">
+            <a th:href="@{/todo/create}" class="btn btn-primary">할 일 등록</a>
+        </div>
+        <div class="col-6">
+            <div class="input-group">
+                <input type="text" id="search_kw" class="form-control" th:value="${kw}">
+                <button class="btn btn-outline-secondary" type="button" id="btn_search">검색</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="table-light">
             <tr>
-                <th>#</th>
-                <th>할 일</th>
-                <th>마감일</th>
-                <th>우선순위</th>
-                <th>진행여부</th>
-                <th>생성일</th>
-                <th>수정일</th>
+                <th style="white-space: nowrap; width: 30px;">#</th>
+                <th style="white-space: nowrap; width: 80px;"></th>
+                <th style="white-space: nowrap;">할 일</th>
+                <th style="white-space: nowrap;">마감일</th>
+                <th style="white-space: nowrap;">우선순위</th>
+                <th style="white-space: nowrap;">진행여부</th>
+                <th style="white-space: nowrap;">태그</th>
             </tr>
             </thead>
-            <tbody>
-            <tr th:each="todo : ${todos}">
+            <tbody class="table-body">
+            <tr th:each="todo : ${todos}" th:id="'todo-' + ${todo.id}">
                 <td th:text="${todo.id}"></td>
-                <td th:text="${todo.content}"></td>
+                <td>
+                    <a th:if="${todo.status.name() != '완료'}" th:href="@{/todo/{id}/complete (id=${todo.id})}"
+                       class="btn btn-success" role="button">
+                        <i class="fas fa-check"></i>
+                    </a>
+                </td>
+                <td>
+                    <a class="todo-content" th:text="${todo.content}" th:href="@{/todo/{id}/detail (id=${todo.id})}"></a>
+                </td>
                 <td th:text="${todo.deadline}"></td>
                 <td th:text="${todo.priority}"></td>
                 <td th:text="${todo.status}"></td>
-                <td th:text="${todo.status}"></td>
-                <td th:text="${todo.status}"></td>
                 <td>
-                    <a href="#" th:href="@{/todo/{id}/update (id=${todo.id})}" class="btn btn-primary" role="button">수정</a>
-                </td>
-                <td>
-                    <a href="#" th:href="@{/todo/{id}/delete (id=${todo.id})}" class="btn btn-secondary" role="button">삭제</a>
+                    <span th:each="hashtag : ${todo.hashtags}">
+                        <span th:text="${hashtag.keyword.content}"></span>
+                    </span>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
+
+    <!-- 페이징처리 시작 -->
+    <div th:if="${!paging.isEmpty()}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                <a class="page-link" href="javascript:void(0)" th:data-page="${paging.number-1}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                th:classappend="${page == paging.number} ? 'active'"
+                class="page-item">
+                <a th:text="${page}" class="page-link" href="javascript:void(0)" th:data-page="${page}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disable'">
+                <a class="page-link" href="javascript:void(0)" th:data-page="${paging.number+1}">
+                    <span>다음</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- 페이징처리 끝 -->
+    <form th:action="@{/todo/list}" method="get" id="searchForm">
+        <input type="hidden" id="kw" name="kw" th:value="${kw}">
+        <input type="hidden" id="page" name="page" th:value="${paging.number}">
+    </form>
 </div>
+
+<!-- 검색 스크립트 -->
+<script type='text/javascript'>
+    const page_elements = document.getElementsByClassName("page-link");
+    Array.from(page_elements).forEach(function (element) {
+        element.addEventListener('click', function () {
+            const nextPage = parseInt(this.dataset.page);
+            document.getElementById('page').value = nextPage;
+            document.getElementById('searchForm').submit();
+        });
+    });
+    const btn_search = document.getElementById("btn_search");
+    btn_search.addEventListener('click', function () {
+        document.getElementById('kw').value = document.getElementById('search_kw').value;
+        document.getElementById('page').value = 0;
+        document.getElementById('searchForm').submit();
+    });
+
+    <!-- 엔터 키로 검색 버튼 클릭 이벤트 추가 -->
+    document.getElementById('search_kw').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            btn_search.click();
+        }
+    });
+</script>
+
 </body>
 </html>
