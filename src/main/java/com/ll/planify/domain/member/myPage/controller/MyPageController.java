@@ -33,6 +33,8 @@ public class MyPageController {
     public String showInfo(@AuthenticationPrincipal CustomUserDetails user, Model model){
         MemberInfoDto memberInfoDto = myPageService.getMemberInfo(user.getId());
         model.addAttribute("memberInfoDto", memberInfoDto);
+        boolean isSocialLogin = myPageService.IsSocialLogin(user.getId());
+        model.addAttribute(("isSocialLogin"), isSocialLogin);
         return "domain/member/myPage/memberInfo";
     }
 

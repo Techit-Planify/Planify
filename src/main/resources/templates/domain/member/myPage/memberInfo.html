@@ -29,17 +29,11 @@
                 <i class="fas fa-pencil-alt" title="수정 가능" style="cursor:pointer;" onclick="showNicknameEdit()"></i>
             </p>
             <div class="card-text row">
-                <!-- 비밀번호 수정 버튼 -->
-                <div class="col text-start">
+                <div th:if="${not isSocialLogin}" class="col text-start">
                     <button onclick="showPasswordEdit()" class="btn btn-secondary">비밀번호 수정</button>
                 </div>
-
-                <!-- 회원 탈퇴 버튼 -->
                 <div class="col text-end">
-                    <!-- 회원 탈퇴 버튼 -->
                     <button id="deleteAccountBtn" class="btn btn-danger">회원 탈퇴</button>
-
-                    <!-- 회원 탈퇴 요청을 보낼 폼 -->
                     <form id="deleteAccountForm" th:action="@{/member/my-page/delete-account}" method="post" style="display: none;">
                         <input type="hidden" name="_method" value="delete"/>
                     </form>
@@ -65,7 +59,6 @@
     document.getElementById('deleteAccountBtn').addEventListener('click', function() {
         const isConfirmed = confirm('정말로 회원 탈퇴하시겠습니까?');
         if (isConfirmed) {
-            // 확인을 누른 경우 폼을 제출하여 서버로 회원 탈퇴 요청을 보냅니다.
             document.getElementById('deleteAccountForm').submit();
         }
     });
