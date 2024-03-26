@@ -1,16 +1,15 @@
 .header {
-    border-bottom: 1px solid #e5e5e5;
-    margin-bottom: 20px;
-    padding: 20px 15px;
     display: flex;
-    justify-content: space-between;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 10px;
+    padding: 20px 15px;
     align-items: center;
+    justify-content: space-between;
 }
 
 .header h2 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
+    margin: 0;
+    line-height: 30px;
     padding-bottom: 19px;
     color: #435EBE;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
@@ -18,6 +17,22 @@
 
 .header h2:hover {
     color: #768EF0;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+}
+
+.login-link {
+    text-decoration: none;
+    color: #435EBE;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.login-link:first-child {
+    margin-left: auto;
 }
 
 body {
@@ -214,4 +229,45 @@ div {
     color: white;
     white-space: nowrap;
     border-radius: 5px;
+}
+
+/* 로그인 페이지 */
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #6c757d;
+    margin: 20px 0;
+}
+
+.separator::before,
+.separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #6c757d;
+}
+
+.separator:not(:empty)::before {
+    margin-right: .25em;
+}
+
+.separator:not(:empty)::after {
+    margin-left: .25em;
+}
+
+h2 {
+    margin-top: 20px;
+    color: #435EBE;
+}
+
+/* 마이페이지 */
+.card-text label {
+    width: 100px; /* 원하는 너비로 조정 */
+    display: inline-block;
+    margin-bottom: 15px; /* 항목 위 아래 여백 추가 */
+}
+/* 입력 칸의 아래 여백 추가 */
+.card-text input[type="text"] {
+    margin-bottom: 15px; /* 항목 위 아래 여백 추가 */
+    margin-right: 10px;
 }
