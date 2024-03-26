@@ -7,46 +7,48 @@
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
 
     <form>
-        <div class="form-group">
-            <label for="content">할 일</label>
-            <input type="text" id="content" th:value="${todo.content}" readonly class="form-control"/>
-        </div>
+        <div class="form-container">
+            <div class="form-group">
+                <label for="content">할 일</label>
+                <input type="text" id="content" th:value="${todo.content}" readonly class="form-control"/>
+            </div>
 
-        <div class="form-group">
-            <label for="deadline">마감일</label>
-            <input type="text" id="deadline" th:value="${todo.deadline}" readonly class="form-control"/>
-        </div>
+            <div class="form-group">
+                <label for="deadline">마감일</label>
+                <input type="text" id="deadline" th:value="${todo.deadline}" readonly class="form-control"/>
+            </div>
 
-        <div class="form-group">
-            <label for="priority">우선순위</label>
-            <input type="text" id="priority" th:value="${todo.priority}" readonly class="form-control"/>
-        </div>
+            <div class="form-group">
+                <label for="priority">우선순위</label>
+                <input type="text" id="priority" th:value="${todo.priority}" readonly class="form-control"/>
+            </div>
 
-        <div class="form-group">
-            <label for="status">진행여부</label>
-            <input type="text" id="status" th:value="${todo.status}" readonly class="form-control"/>
-        </div>
+            <div class="form-group">
+                <label for="status">진행여부</label>
+                <input type="text" id="status" th:value="${todo.status}" readonly class="form-control"/>
+            </div>
 
-        <div class="form-group">
-            <label>태그</label>
-            <div style="display: flex; flex-wrap: wrap;">
-                <div th:each="hashtag : ${todo.hashtags}" class="tag">
-                    <span th:text="${hashtag.keyword.content}" class="tag-text"></span>
+            <div class="form-group">
+                <label>태그</label>
+                <div style="display: flex; flex-wrap: wrap;">
+                    <div th:each="hashtag : ${todo.hashtags}" class="tag">
+                        <span th:text="${hashtag.keyword.content}" class="tag-text"></span>
+                    </div>
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label for="createdAt">생성일</label>
+                <input type="text" id="createdAt" th:value="${#temporals.format(todo.createdAt, 'yyyy-MM-dd HH:mm')}" readonly class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <label for="createdAt">수정일</label>
+                <input type="text" id="updatedAt" th:value="${#temporals.format(todo.updatedAt, 'yyyy-MM-dd HH:mm')}" readonly class="form-control"/>
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="createdAt">생성일</label>
-            <input type="text" id="createdAt" th:value="${#temporals.format(todo.createdAt, 'yyyy-MM-dd HH:mm')}" readonly class="form-control"/>
-        </div>
-
-        <div class="form-group">
-            <label for="createdAt">수정일</label>
-            <input type="text" id="updatedAt" th:value="${#temporals.format(todo.updatedAt, 'yyyy-MM-dd HH:mm')}" readonly class="form-control"/>
-        </div>
-
-        <div>
+        <div class="button-container">
             <a th:href="@{/todo/{id}/update (id=${todo.id})}" class="btn btn-primary">수정</a>
             <a th:href="@{/todo/list}" class="btn btn-info">목록</a>
             <a th:href="@{/todo/{id}/delete (id=${todo.id})}" class="btn btn-secondary" role="button"

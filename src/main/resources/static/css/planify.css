@@ -180,6 +180,16 @@ div {
     flex: 1;
 }
 
+/* 등록 페이지 */
+.form-container {
+    max-width: 500px;
+    margin: auto;
+}
+
+.button-container {
+    text-align: center;
+}
+
 .fieldError {
     border-color: #bd2130;
 }
@@ -262,12 +272,12 @@ h2 {
 
 /* 마이페이지 */
 .card-text label {
-    width: 100px; /* 원하는 너비로 조정 */
+    width: 100px;
     display: inline-block;
-    margin-bottom: 15px; /* 항목 위 아래 여백 추가 */
+    margin-bottom: 15px;
 }
-/* 입력 칸의 아래 여백 추가 */
+
 .card-text input[type="text"] {
-    margin-bottom: 15px; /* 항목 위 아래 여백 추가 */
+    margin-bottom: 15px;
     margin-right: 10px;
 }

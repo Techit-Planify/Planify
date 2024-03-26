@@ -36,7 +36,7 @@
                 <td th:text="${todo.id}"></td>
                 <td>
                     <a th:if="${todo.status.name() != '완료'}" th:href="@{/todo/{id}/complete (id=${todo.id})}"
-                       class="btn btn-success" role="button">
+                       class="btn btn-success btn-xs mt-n1" role="button">
                         <i class="fas fa-check"></i>
                     </a>
                 </td>
