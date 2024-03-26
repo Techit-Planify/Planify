@@ -1,0 +1,217 @@
+.header {
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 20px;
+    padding: 20px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+    color: #435EBE;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+
+.header h2:hover {
+    color: #768EF0;
+}
+
+body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #F2F7FF;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+
+div {
+    display: block;
+}
+
+.card {
+    height: 100%;
+}
+
+.card-header {
+    background-color: #FFFFFF;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    padding: 32px 24px;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+}
+
+.card-text,
+.card-header h3 {
+    color: #25396F;
+    margin-bottom: 0px;
+}
+
+.card-text-bold {
+     font-weight: bold;
+}
+
+
+.col-md-4 {
+    padding: 10px 12px;
+}
+
+.stats-icon {
+    height: 70px;
+    width: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    color: #FFFFFF;
+}
+
+.stats-icon i {
+    font-size: 40px;
+}
+
+
+.icon-new {
+    background-color: #9694FF;
+}
+
+.icon-pg {
+    background-color: #57CAEB;
+}
+
+.icon-all {
+    background-color: #5FD9AC;
+}
+
+.col-lg-3 {
+    flex: 0 0 auto;
+    width: 25%;
+}
+
+.row > .col-6 {
+    align-items: stretch;
+}
+
+.row + .row {
+    margin-top: 20px;
+}
+
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.tag {
+    margin: 5px 4px 5px 4px;
+    padding: 3px 7px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.tag-text {
+    margin-right: 5px;
+    white-space: nowrap;
+}
+
+.tags {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+
+.todo-content {
+    color: black;
+}
+
+.todo-content:hover {
+    color: #005cbf;
+}
+
+.todo-list {
+    list-style: none;
+    padding: 0;
+}
+
+.todo-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.todo-item-icon {
+    margin-right: 15px;
+    color: #666;
+}
+
+.todo-item-content {
+    flex: 1;
+}
+
+.fieldError {
+    border-color: #bd2130;
+}
+
+.table-responsive {
+    background-color: #FFFFFF;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+}
+
+.pagination {
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background-color: #9694FF;
+    border: 1px solid #9694FF;
+}
+
+.btn-primary:hover {
+    background-color: transparent;
+    border: 1px solid #9694FF;
+    color: #9694FF;
+}
+
+.btn-success {
+    background-color: #5FD9AC;
+    border: 1px solid #5FD9AC;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.btn-success:hover {
+    background-color: transparent;
+    border: 1px solid #5FD9AC;
+    color: #5FD9AC;
+}
+
+.table-body {
+    justify-content: center;
+}
+
+.progress-bar {
+    height: 100%;
+    text-align: center;
+    background-color: #435EBE;
+    color: white;
+    white-space: nowrap;
+    border-radius: 5px;
+}
