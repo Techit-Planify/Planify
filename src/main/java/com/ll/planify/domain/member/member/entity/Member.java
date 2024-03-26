@@ -1,5 +1,6 @@
 package com.ll.planify.domain.member.member.entity;
 
+import com.ll.planify.domain.member.myPage.dto.UpdateMemberNicknameDto;
 import com.ll.planify.domain.todo.todo.entity.Todo;
 import com.ll.planify.global.jpa.BaseEntity;
 import jakarta.persistence.*;
@@ -37,5 +38,13 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Todo> todoList;
+
+    public void updateMemberNickname(UpdateMemberNicknameDto updateMemberNicknameDto){
+        this.nickname = updateMemberNicknameDto.getNickname();
+    }
+
+    public void updateMemberPassword(String newPassword){
+        this.password = newPassword;
+    }
 
 }

@@ -19,14 +19,6 @@ public class MemberService {
 
     @Transactional
     public void register(MemberRegisterDto memberRegisterDto){
-        if(emailIsExist(memberRegisterDto.getEmail())){
-            throw new RuntimeException("이미 등록된 이메일입니다.");
-        } else if (nicknameIsExist(memberRegisterDto.getNickname())) {
-            throw new RuntimeException("이미 등록된 닉네임입니다.");
-        } else if (!memberRegisterDto.getPassword().equals(memberRegisterDto.getPasswordConfirm())){
-            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
-        }
-
         Member member = Member.builder()
                 .email(memberRegisterDto.getEmail())
                 .username(memberRegisterDto.getUsername())

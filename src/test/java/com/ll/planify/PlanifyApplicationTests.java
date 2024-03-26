@@ -1,10 +1,13 @@
 package com.ll.planify;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 class PlanifyApplicationTests {
 
-    @org.junit.jupiter.api.Test
-    void main() {
+    @Test
+    void contextLoads() {
     }
+
 }
