@@ -2,9 +2,6 @@ server:
   port: 8080
   shutdown: graceful
 spring:
-  profiles:
-    include:
-      - secret
   servlet:
     multipart:
       max-file-size: 5MB
@@ -27,7 +24,7 @@ spring:
       client:
         registration:
           kakao:
-            clientId: ${kakaoClientId}
+            clientId: ON_SECRET
             scope: profile_nickname
             client-name: Kakao
             authorization-grant-type: authorization_code
