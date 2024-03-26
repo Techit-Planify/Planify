@@ -56,4 +56,9 @@ public class MyPageService {
         Member member = memberRepository.findById(id).get();
         memberRepository.delete(member);
     }
+
+    public boolean IsSocialLogin(Long id) {
+        String social = memberRepository.findById(id).get().getProviderId();
+        return social != null;
+    }
 }

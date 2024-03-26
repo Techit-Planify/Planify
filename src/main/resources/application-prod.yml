@@ -56,7 +56,7 @@ spring:
 
 logging:
   level:
-    com.ll.rsv: INFO
+    com.ll.planify: INFO
     org.hibernate.SQL: INFO
     org.hibernate.orm.jdbc.bind: INFO
     org.hibernate.orm.jdbc.extract: INFO
