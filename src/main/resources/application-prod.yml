@@ -24,7 +24,7 @@ spring:
       client:
         registration:
           kakao:
-            clientId: ON_SECRET
+            clientId: ${custom.prod.oauth2.kakao.clientId}
             scope: profile_nickname
             client-name: Kakao
             authorization-grant-type: authorization_code
