@@ -5,13 +5,19 @@ import com.ll.planify.domain.member.myPage.dto.UpdateMemberNicknameDto;
 import com.ll.planify.domain.member.myPage.dto.UpdateMemberPasswordDto;
 import com.ll.planify.domain.member.myPage.service.MyPageService;
 import com.ll.planify.global.security.CustomUserDetails;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,6 +83,16 @@ public class MyPageController {
         myPageService.updatePassword(updateMemberPasswordDto, user.getId());
 
         return "redirect:/member/my-page";
+    }
+
+    @DeleteMapping("/delete-account")
+    private String deleteMember(@AuthenticationPrincipal CustomUserDetails user, HttpServletResponse response, HttpServletRequest request){
+        myPageService.deleteMember(user.getId());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/?logout";
     }
 
 }

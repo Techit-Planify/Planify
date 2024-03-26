@@ -50,4 +50,10 @@ public class MyPageService {
         Optional<Member> optionalMember = memberRepository.findByNickname(updateMemberNicknameDto.getNickname());
         return optionalMember.isPresent() && !optionalMember.get().getId().equals(id);
     }
+
+    @Transactional
+    public void deleteMember(Long id) {
+        Member member = memberRepository.findById(id).get();
+        memberRepository.delete(member);
+    }
 }
