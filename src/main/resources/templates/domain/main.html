@@ -134,8 +134,8 @@
         // URL에서 쿼리 파라미터 확인
         const urlParams = new URLSearchParams(window.location.search);
         const todoCreated = urlParams.get('todoCreated');
+        const todoCompleted = urlParams.get('todoCompleted');
 
-        // 'todoCreated' 쿼리 파라미터가 'true'일 경우 알림 표시
         if (todoCreated === 'true') {
             toastr.options = {
                 closeButton: true,
@@ -144,6 +144,16 @@
                 timeOut: 4000
             };
             toastr.success('할 일이 성공적으로 등록되었습니다!');
+        }
+
+        if (todoCompleted === 'true') {
+            toastr.options = {
+                closeButton: true,
+                progressBar: true,
+                showMethod: 'slideDown',
+                timeOut: 4000
+            }
+            toastr.success('할 일이 완료되었습니다!')
         }
     });
 </script>

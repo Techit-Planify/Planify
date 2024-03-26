@@ -127,7 +127,7 @@ public class TodoController {
         Member member = opMember.get();
 
         todoService.completeTodo(todoId, member);
-        return "redirect:/todo/list";
+        return "redirect:/?todoCompleted=true";
     }
 
     @GetMapping("/{todoId}/update")
