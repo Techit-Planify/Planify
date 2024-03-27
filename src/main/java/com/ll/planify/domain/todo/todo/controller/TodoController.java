@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -45,7 +44,7 @@ public class TodoController {
             return "domain/todo/todo/createTodoForm";
         }
 
-        Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
+        Optional<Member> opMember = memberRepository.findById(user.getId());
         if (opMember.isEmpty()) {
             return "redirect:/";
         }
@@ -74,7 +73,7 @@ public class TodoController {
     @GetMapping("/{todoId}/detail")
     public String showTodoDetail(@PathVariable Long todoId, Model model,
                                  @AuthenticationPrincipal CustomUserDetails user) {
-        Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
+        Optional<Member> opMember = memberRepository.findById(user.getId());
 
         if (opMember.isEmpty()) {
             return "redirect:/";
@@ -99,28 +98,27 @@ public class TodoController {
                        @RequestParam(value = "status", required = false) TodoStatus status,
                        @AuthenticationPrincipal CustomUserDetails user) {
 
-        Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
-        if (opMember.isEmpty()) {
-            return "redirect:/";
-        }
-        Member member = opMember.get();
+        return memberRepository.findById(user.getId())
+                .map(member -> processTodoList(model, page, kw, tag, status, member))
+                .orElse("redirect:/");
+    }
 
-        Page<Todo> paging;
+    private String processTodoList(Model model, int page, String kw, String tag,
+                                   TodoStatus status, Member member) {
 
-        paging = this.todoService.getTodosByCriteria(page, kw, tag, status, member);
-
-        List<Todo> todos = paging.getContent();
+        Page<Todo> paging = todoService.getTodosByCriteria(page, kw, tag, status, member);
 
         model.addAttribute("paging", paging);
         model.addAttribute("kw", kw);
         model.addAttribute("tag", tag);
-        model.addAttribute("todos", todos);
+        model.addAttribute("todos", paging.getContent());
+
         return "domain/todo/todo/todoList";
     }
 
     @GetMapping("/{todoId}/complete")
     public String completeTodo(@PathVariable Long todoId, @AuthenticationPrincipal CustomUserDetails user) {
-        Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
+        Optional<Member> opMember = memberRepository.findById(user.getId());
 
         if (opMember.isEmpty()) {
             return "redirect:/";
@@ -134,7 +132,7 @@ public class TodoController {
     @GetMapping("/{todoId}/update")
     public String updateTodoForm(@PathVariable("todoId") Long todoId, Model model,
                                  @AuthenticationPrincipal CustomUserDetails user) {
-        Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
+        Optional<Member> opMember = memberRepository.findById(user.getId());
 
         if (opMember.isEmpty()) {
             return "redirect:/";
@@ -162,7 +160,7 @@ public class TodoController {
     @PostMapping("/{todoId}/update")
     public String updateTodo(@PathVariable Long todoId, @ModelAttribute("form") TodoForm form,
                              @AuthenticationPrincipal CustomUserDetails user) {
-        Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
+        Optional<Member> opMember = memberRepository.findById(user.getId());
 
         if (opMember.isEmpty()) {
             return "redirect:/";
@@ -179,7 +177,7 @@ public class TodoController {
 
     @GetMapping("/{todoId}/delete")
     public String deleteTodo(@PathVariable Long todoId, @AuthenticationPrincipal CustomUserDetails user) {
-        Optional<Member> opMember = memberRepository.findByUsername(user.getUsername());
+        Optional<Member> opMember = memberRepository.findById(user.getId());
 
         if (opMember.isEmpty()) {
             return "redirect:/";
