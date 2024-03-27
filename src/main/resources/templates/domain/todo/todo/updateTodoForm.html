@@ -10,12 +10,12 @@
         <div class="form-container">
             <div class="form-group">
                 <label th:for="content">할 일</label>
-                <input type="text" th:field="*{content}" class="form-control" placeholder="새로운 할 일" />
+                <input type="text" th:field="*{content}" class="form-control" />
             </div>
 
             <div class="form-group">
                 <label th:for="deadline">마감일</label>
-                <input type="date" th:field="*{deadline}" class="form-control" placeholder="마감일을 선택하세요" />
+                <input type="datetime-local" th:field="*{deadline}" class="form-control" />
             </div>
 
             <div class="form-group">

@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class Todo extends BaseEntity {
 
     private String content;
 
-    private LocalDate deadline; // 마감일 설정
+    private LocalDateTime deadline; // 마감일 설정
 
     @Enumerated(EnumType.STRING)
     private TodoPriority priority; // 우선순위 [없음, 낮음, 중간, 높음]

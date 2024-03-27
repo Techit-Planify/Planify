@@ -22,11 +22,11 @@
 
             <div class="form-group">
                 <label th:for="deadline">마감일</label>
-                <input type="date" th:field="*{deadline}" class="form-control" placeholder="마감일을 선택하세요"
-                       th:min="${today}"
+                <input type="datetime-local" th:field="*{deadline}" class="form-control"
                        th:class="${#fields.hasErrors('deadline')}? 'form-control fieldError' : 'form-control'">
                 <p th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}">Incorrect date</p>
             </div>
+
 
             <div class="form-group">
                 <label th:for="priority">우선순위</label>
@@ -49,11 +49,11 @@
     <br/>
 </div>
 
-<!-- 현재 날짜 가져오기 -->
+<!-- 현재 시간 이후의 마감일을 선택하도록 현재 날짜 가져오기 -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var today = new Date().toISOString().split('T')[0]; // 오늘 날짜를 'YYYY-MM-DD' 형식으로 변환
-        document.querySelector('.form-control[type="date"]').setAttribute('min', today);
+        var now = new Date().toISOString().slice(0,16); // 'YYYY-MM-DDTHH:MM' 형식으로 변환
+        document.querySelector('.form-control[type="datetime-local"]').setAttribute('min', now);
     });
 </script>
 

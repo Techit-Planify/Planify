@@ -15,7 +15,7 @@
 
             <div class="form-group">
                 <label for="deadline">마감일</label>
-                <input type="text" id="deadline" th:value="${todo.deadline}" readonly class="form-control"/>
+                <input type="text" id="deadline" th:value="${#temporals.format(todo.deadline, 'yyyy-MM-dd HH:mm')}" readonly class="form-control"/>
             </div>
 
             <div class="form-group">

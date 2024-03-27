@@ -43,7 +43,7 @@
                 <td>
                     <a class="todo-content" th:text="${todo.content}" th:href="@{/todo/{id}/detail (id=${todo.id})}"></a>
                 </td>
-                <td th:text="${todo.deadline}"></td>
+                <td th:text="${#temporals.format(todo.deadline, 'yyyy-MM-dd HH:mm')}"></td>
                 <td th:text="${todo.priority}"></td>
                 <td th:text="${todo.status}"></td>
                 <td>
