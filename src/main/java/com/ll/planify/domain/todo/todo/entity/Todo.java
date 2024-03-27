@@ -27,7 +27,7 @@ public class Todo extends BaseEntity {
     private LocalDate deadline; // 마감일 설정
 
     @Enumerated(EnumType.STRING)
-    private TodoPriority priority; // 우선순위[높음, 중간, 낮음]
+    private TodoPriority priority; // 우선순위 [없음, 낮음, 중간, 높음]
 
     @Enumerated(EnumType.STRING)
     private TodoStatus status; // 진행여부[PROGRESS, DONE]

@@ -11,12 +11,8 @@
     margin: 0;
     line-height: 30px;
     padding-bottom: 19px;
-    color: #435EBE;
+    color: #25396F;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-}
-
-.header h2:hover {
-    color: #768EF0;
 }
 
 .navbar {
@@ -26,7 +22,7 @@
 
 .login-link {
     text-decoration: none;
-    color: #435EBE;
+    color: #25396F;
     margin-left: 10px;
     margin-right: 10px;
 }
@@ -46,6 +42,12 @@ div {
     display: block;
 }
 
+/* 로그인 페이지 */
+.login-text {
+    color: #25396F;
+}
+
+/* 메인페이지 카드 */
 .card {
     height: 100%;
 }
