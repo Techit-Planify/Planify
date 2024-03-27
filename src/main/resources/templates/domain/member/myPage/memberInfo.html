@@ -17,15 +17,18 @@
         <h5 class="card-header">회원 정보</h5>
         <div class="card-body">
             <p class="card-text">
-                이메일: <span th:text="${memberInfoDto.email}">이메일</span>
+                <label for="email">이메일:</label>
+                <input type="text" id="email" th:value="${memberInfoDto.email}" readonly>
                 <i class="fas fa-lock" title="수정 불가"></i>
             </p>
             <p class="card-text">
-                사용자 이름: <span th:text="${memberInfoDto.username}">사용자 이름</span>
+                <label for="username">사용자 이름:</label>
+                <input type="text" id="username" th:value="${memberInfoDto.username}" readonly>
                 <i class="fas fa-lock" title="수정 불가"></i>
             </p>
             <p class="card-text">
-                닉네임: <span id="nicknameDisplay" th:text="${memberInfoDto.nickname}">닉네임</span>
+                <label for="nicknameDisplay">닉네임:</label>
+                <input type="text" id="nicknameDisplay" th:value="${memberInfoDto.nickname}" readonly>
                 <i class="fas fa-pencil-alt" title="수정 가능" style="cursor:pointer;" onclick="showNicknameEdit()"></i>
             </p>
             <div class="card-text row">
@@ -45,8 +48,6 @@
 
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- 폰트 어썸 JS 추가 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
 
 <script>
     function showNicknameEdit() {

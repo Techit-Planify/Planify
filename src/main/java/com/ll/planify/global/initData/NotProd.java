@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Profile("!prod")
@@ -51,7 +51,7 @@ public class NotProd {
 
                 Todo t1 = new Todo();
                 t1.setContent("장보기");
-                t1.setDeadline(LocalDate.now().plusDays(2));
+                t1.setDeadline(LocalDateTime.now().plusDays(2));
                 t1.setPriority(TodoPriority.낮음);
                 t1.setStatus(TodoStatus.진행중);
                 t1.setMember(user1);
@@ -59,7 +59,7 @@ public class NotProd {
 
                 Todo t2 = new Todo();
                 t2.setContent("운동하기");
-                t2.setDeadline(LocalDate.now().plusDays(5));
+                t2.setDeadline(LocalDateTime.now().plusDays(5));
                 t2.setPriority(TodoPriority.높음);
                 t2.setStatus(TodoStatus.진행중);
                 t2.setMember(user1);
@@ -67,7 +67,7 @@ public class NotProd {
 
                 Todo t3 = new Todo();
                 t3.setContent("도서 읽기");
-                t3.setDeadline(LocalDate.now().plusDays(10));
+                t3.setDeadline(LocalDateTime.now().plusDays(10));
                 t3.setPriority(TodoPriority.중간);
                 t3.setStatus(TodoStatus.진행중);
                 t3.setMember(user2);
@@ -75,7 +75,7 @@ public class NotProd {
 
                 Todo t4 = new Todo();
                 t4.setContent("노트북 매장 방문");
-                t4.setDeadline(LocalDate.now().plusDays(30));
+                t4.setDeadline(LocalDateTime.now().plusDays(30));
                 t4.setPriority(TodoPriority.중간);
                 t4.setStatus(TodoStatus.완료);
                 t4.setMember(user2);
