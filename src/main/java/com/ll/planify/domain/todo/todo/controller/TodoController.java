@@ -16,7 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,7 +55,7 @@ public class TodoController {
 
         Todo todo = new Todo();
         todo.setContent(form.getContent());
-        todo.setDeadline(LocalDate.parse(form.getDeadline())); // 문자열을 다시 LocalDate로 변환하여 설정
+        todo.setDeadline(LocalDateTime.parse(form.getDeadline())); // 문자열 -> LocalDateTime 변환
         todo.setPriority(form.getPriority());
         todo.setStatus(TodoStatus.진행중);
         todo.setMember(member);
@@ -165,8 +165,8 @@ public class TodoController {
         }
         Member member = opMember.get();
 
-        // 문자열로 변환된 deadline을 다시 LocalDate로 변환하여 설정
-        LocalDate deadline = LocalDate.parse(form.getDeadline());
+        // 문자열 deadline -> LocalDateTime 변환
+        LocalDateTime deadline = LocalDateTime.parse(form.getDeadline());
 
         todoService.updateTodo(todoId, form.getContent(), deadline, form.getPriority(), member);
         hashtagService.updateHashtags(todoId, form.getTag());

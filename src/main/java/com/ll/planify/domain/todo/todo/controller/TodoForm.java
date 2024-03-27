@@ -14,7 +14,7 @@ public class TodoForm {
     @NotEmpty(message = "마감일은 필수로 설정해야 합니다.")
     private String deadline;
 
-    private TodoPriority priority; // 우선순위 [높음, 중간, 낮음]
+    private TodoPriority priority; // 우선순위 [없음, 낮음, 중간, 높음]
 
     private String tag;
 }
