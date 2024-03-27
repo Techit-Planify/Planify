@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -146,7 +147,10 @@ public class TodoController {
         if (getTodo.isPresent()) {
             Todo todo = getTodo.get();
             form.setContent(todo.getContent());
-            form.setDeadline(todo.getDeadline().toString()); // LocalDate를 문자열로 변환하여 설정
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            form.setDeadline(todo.getDeadline().format(formatter));
+
             form.setPriority(todo.getPriority());
             form.setTag(todoService.getHashtagsAsString(todoId, member));
         }
