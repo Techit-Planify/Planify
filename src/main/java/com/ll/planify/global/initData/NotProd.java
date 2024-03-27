@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Random;
 
 @Profile("!prod")
 @Configuration
@@ -49,46 +50,35 @@ public class NotProd {
                 Member user1 = user1Optional.get();
                 Member user2 = user2Optional.get();
 
-                Todo t1 = new Todo();
-                t1.setContent("장보기");
-                t1.setDeadline(LocalDateTime.now().plusDays(2));
-                t1.setPriority(TodoPriority.낮음);
-                t1.setStatus(TodoStatus.진행중);
-                t1.setMember(user1);
-                todoService.save(t1);
+                String[] contents = {"장보기", "운동하기", "도서 읽기", "노트북 매장 방문", "영화 보기", "친구 만나기", "프로젝트 준비", "코딩 연습", "여행 계획", "일기 쓰기"};
+                String[] hashtags = {"#쇼핑", "#건강", "#취미", "#외출", "#휴식", "#친구", "#프로젝트", "#코딩", "#여행", "#일기"};
 
-                Todo t2 = new Todo();
-                t2.setContent("운동하기");
-                t2.setDeadline(LocalDateTime.now().plusDays(5));
-                t2.setPriority(TodoPriority.높음);
-                t2.setStatus(TodoStatus.진행중);
-                t2.setMember(user1);
-                todoService.save(t2);
+                Random random = new Random();
 
-                Todo t3 = new Todo();
-                t3.setContent("도서 읽기");
-                t3.setDeadline(LocalDateTime.now().plusDays(10));
-                t3.setPriority(TodoPriority.중간);
-                t3.setStatus(TodoStatus.진행중);
-                t3.setMember(user2);
-                todoService.save(t3);
+                // 각 유저별로 20개의 할 일 생성
+                for (int i = 0; i < 20; i++) {
+                    Todo todo1 = new Todo();
+                    todo1.setContent(contents[random.nextInt(contents.length)]);
+                    todo1.setDeadline(LocalDateTime.now().plusDays(random.nextInt(30) + 1));
+                    todo1.setPriority(TodoPriority.values()[random.nextInt(TodoPriority.values().length)]);
+                    todo1.setStatus(TodoStatus.values()[random.nextInt(TodoStatus.values().length)]);
+                    todo1.setMember(user1);
+                    todoService.save(todo1);
 
-                Todo t4 = new Todo();
-                t4.setContent("노트북 매장 방문");
-                t4.setDeadline(LocalDateTime.now().plusDays(30));
-                t4.setPriority(TodoPriority.중간);
-                t4.setStatus(TodoStatus.완료);
-                t4.setMember(user2);
-                todoService.save(t4);
+                    String hash1 = hashtags[random.nextInt(hashtags.length)] + " " + hashtags[random.nextInt(hashtags.length)];
+                    hashtagService.addHashtags(todo1, hash1);
 
-                String hash1 = "#쇼핑 #식품 #외출";
-                hashtagService.addHashtags(t1, hash1);
+                    Todo todo2 = new Todo();
+                    todo2.setContent(contents[random.nextInt(contents.length)]);
+                    todo2.setDeadline(LocalDateTime.now().plusDays(random.nextInt(30) + 1));
+                    todo2.setPriority(TodoPriority.values()[random.nextInt(TodoPriority.values().length)]);
+                    todo2.setStatus(TodoStatus.values()[random.nextInt(TodoStatus.values().length)]);
+                    todo2.setMember(user2);
+                    todoService.save(todo2);
 
-                String hash2 = "#건강 #외출";
-                hashtagService.addHashtags(t2, hash2);
-
-                String hash4 = "#쇼핑 #취미";
-                hashtagService.addHashtags(t4, hash4);
+                    String hash2 = hashtags[random.nextInt(hashtags.length)] + " " + hashtags[random.nextInt(hashtags.length)];
+                    hashtagService.addHashtags(todo2, hash2);
+                }
             }
         };
     }
