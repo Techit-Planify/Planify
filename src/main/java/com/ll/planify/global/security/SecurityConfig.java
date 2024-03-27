@@ -18,7 +18,7 @@ public class SecurityConfig {
         http
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/h2-console/**")
+                                .requestMatchers("/h2-console/**", "/css/**", "/js/**", "/logo/**")
                                 .permitAll()
                                 .requestMatchers("/")
                                 .permitAll()

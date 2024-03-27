@@ -14,7 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,7 +58,7 @@ public class TodoService {
     }
 
     @Transactional
-    public void updateTodo(Long todoId, String content, LocalDate deadline,
+    public void updateTodo(Long todoId, String content, LocalDateTime deadline,
                            TodoPriority priority, Member member) {
         Optional<Todo> getTodo = todoRepository.findByIdAndMember(todoId, member);
 
