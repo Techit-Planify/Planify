@@ -30,8 +30,8 @@ spring:
             authorization-grant-type: authorization_code
             redirect-uri: '${custom.site.baseUrl}/{action}/oauth2/code/{registrationId}'
           google:
-            client-id: ON_SECRET
-            client-secret: ON_SECRET
+            client-id: ${custom.prod.google.clientId}
+            client-secret: ${custom.prod.google.clientSecret}
             scope:
               - email
               - profile
