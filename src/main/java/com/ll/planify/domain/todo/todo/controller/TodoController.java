@@ -9,7 +9,6 @@ import com.ll.planify.domain.todo.todo.service.TodoService;
 import com.ll.planify.global.security.CustomUserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -99,19 +99,19 @@ public class TodoController {
                        @AuthenticationPrincipal CustomUserDetails user) {
 
         return memberRepository.findById(user.getId())
-                .map(member -> processTodoList(model, page, kw, tag, status, member))
+                .map(member -> processTodoList(model, kw, tag, status, member))
                 .orElse("redirect:/");
     }
 
-    private String processTodoList(Model model, int page, String kw, String tag,
+    private String processTodoList(Model model, String kw, String tag,
                                    TodoStatus status, Member member) {
 
-        Page<Todo> paging = todoService.getTodosByCriteria(page, kw, tag, status, member);
+        List<Todo> todos = todoService.getTodosByCriteria(kw, tag, status, member);
 
-        model.addAttribute("paging", paging);
-        model.addAttribute("kw", kw);
+        model.addAttribute("todos", todos);
         model.addAttribute("tag", tag);
-        model.addAttribute("todos", paging.getContent());
+        model.addAttribute("kw", kw);
+        model.addAttribute("status", status);
 
         return "domain/todo/todo/todoList";
     }
