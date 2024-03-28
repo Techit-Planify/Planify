@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
@@ -21,7 +20,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 public class Member extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
