@@ -19,7 +19,6 @@ public class Todo extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "todo_id")
     private Long id;
 
     private String content;
