@@ -53,12 +53,13 @@ public class TodoController {
         // 날짜를 문자열로 변환하여 설정
         form.setDeadline(form.getDeadline().toString());
 
-        Todo todo = new Todo();
-        todo.setContent(form.getContent());
-        todo.setDeadline(LocalDateTime.parse(form.getDeadline())); // 문자열 -> LocalDateTime 변환
-        todo.setPriority(form.getPriority());
-        todo.setStatus(TodoStatus.진행중);
-        todo.setMember(member);
+        Todo todo = Todo.builder()
+                        .content(form.getContent())
+                        .deadline(LocalDateTime.parse(form.getDeadline()))
+                        .priority(form.getPriority())
+                        .status(TodoStatus.진행중)
+                        .member(member)
+                        .build();
 
         todoService.save(todo);
 
@@ -92,7 +93,6 @@ public class TodoController {
 
     @GetMapping("/list")
     public String list(Model model,
-                       @RequestParam(value = "page", defaultValue = "0") int page,
                        @RequestParam(value = "kw", defaultValue = "") String kw,
                        @RequestParam(value = "tag", required = false) String tag,
                        @RequestParam(value = "status", required = false) TodoStatus status,

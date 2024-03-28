@@ -16,11 +16,11 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
 
     void deleteByIdAndMember(Long id, Member member);
 
-    @Query("SELECT t FROM Todo t LEFT JOIN t.hashtags h " +
+    @Query("SELECT t FROM Todo t LEFT JOIN t.hashtags h ON h.keyword.content = :tag " +
             "WHERE t.member = :member " +
-            "AND (:tag IS NULL OR h.keyword.content = :tag) " +
+            "AND (:tag IS NULL OR h.keyword.content IS NOT NULL) " +
             "AND (:status IS NULL OR t.status = :status) " +
-            "AND (:kw IS NULL OR t.content LIKE %:kw%)")
+            "AND (:kw IS NULL OR t.content LIKE %:kw%) GROUP BY t.id")
     List<Todo> findAllByCriteria(@Param("kw") String kw,
                                  @Param("tag") String tag,
                                  @Param("status") TodoStatus status,

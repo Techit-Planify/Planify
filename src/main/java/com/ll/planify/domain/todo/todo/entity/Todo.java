@@ -3,9 +3,7 @@ package com.ll.planify.domain.todo.todo.entity;
 import com.ll.planify.domain.member.member.entity.Member;
 import com.ll.planify.global.jpa.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,6 +13,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Todo extends BaseEntity {
 
     @Id
